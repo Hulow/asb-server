@@ -37,7 +37,7 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('./package-lock.json') }}
       - name: Run Eslint
-        run: rpm run lint
+        run: npm run lint
 
   build:
     runs-on: ubuntu-latest
@@ -55,4 +55,4 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('./package-lock.json') }}
       - name: Transpile
-        run: npm build
+        run: npm run build
