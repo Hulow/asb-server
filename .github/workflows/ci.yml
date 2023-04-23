@@ -17,7 +17,7 @@ jobs:
         id: cache-deps
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('./yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('./package-lock.json') }}
       - name: Install locked dependencies
         run: npm install --frozen-lockfile
 
@@ -35,7 +35,7 @@ jobs:
         id: restore-deps
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('./yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('./package-lock.json') }}
       - name: Run Eslint
         run: rpm run lint
 
@@ -53,6 +53,6 @@ jobs:
         id: restore-deps
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('./yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('./package-lock.json') }}
       - name: Transpile
         run: npm build
