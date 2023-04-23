@@ -12,8 +12,8 @@
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "outDir": "./dist/",
-    "types": ["node", "jest", "reflect-metadata"]
+    "types": ["node", "reflect-metadata"]
   },
   "include": ["**/*.ts"],
-  "exclude": ["node_modules", "jest.config.ts"]
+  "exclude": ["./dist/"]
 }

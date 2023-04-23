@@ -1,12 +1,26 @@
 {
+  "scripts": {
+    "lint": "eslint --max-warnings=0 .",
+    "lint:fix": "eslint --fix --max-warnings=0 .",
+    "build": "rm -rf dist && tsc"
+  },
   "dependencies": {
     "inversify": "^6.0.1",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@types/node": "^18.16.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
     "eslint": "^8.39.0",
+    "lint-staged": "^13.2.1",
+    "prettier": "^2.8.8",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,json,md}": [
+      "prettier --write",
+      "eslint --fix --max-warnings=0"
+    ]
   }
 }
