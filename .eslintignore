@@ -3,3 +3,4 @@ dist
 tmp
 .eslintrc.cjs
 .env
+postgres
