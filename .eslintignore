@@ -4,3 +4,6 @@ tmp
 .eslintrc.cjs
 .env
 postgres
+jest.config.ts
+src/scripts/inputs/*
+src/scripts/execute.ts
