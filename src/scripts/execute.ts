@@ -11,7 +11,10 @@ export enum InputFileName {
 // execute().catch((err) => console.log(err));
 async function execute() {
   try {
-    await new ValidateAndGetInputsDirectory(INPUTS_DIRECTORY, InputFileName.ImpulseResponse).validateAndGetInputs();
+    await new ValidateAndGetInputsDirectory(
+      INPUTS_DIRECTORY,
+      InputFileName.ImpulseResponse,
+    ).validateAndGetInputsDirectory();
   } catch (error) {
     console.log(error);
   }

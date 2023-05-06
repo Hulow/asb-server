@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { InputFileName } from './execute';
 
-export enum fileExtension {
+export enum FileExtension {
   txt = '.txt',
   json = '.json',
 }
@@ -22,10 +22,10 @@ export class ValidateAndGetInputsDirectory {
     this.inputsDirectory = path.join(__dirname, inputsDirectory);
   }
 
-  async validateAndGetInputs(): Promise<filesInputDirectory> {
+  async validateAndGetInputsDirectory(): Promise<filesInputDirectory> {
     await this.validateDirectory();
     await this.validateContentDirectory();
-    const files = await this.validateAndGetFiles();
+    const files = await this.validateAndGetFilePath();
     const { txtFile, jsonFile } = files;
     return {
       inputsDirectory: this.inputsDirectory,
@@ -53,10 +53,10 @@ export class ValidateAndGetInputsDirectory {
     return await fs.promises.readdir(this.inputsDirectory);
   }
 
-  private async validateAndGetFiles(): Promise<FileInputs> {
+  private async validateAndGetFilePath(): Promise<FileInputs> {
     const files = await this.readFilesFromDirectory();
-    const textFiles = files.filter((file) => fileExtension.txt === this.getExtensionFile(file));
-    const jsonFiles = files.filter((file) => fileExtension.json === this.getExtensionFile(file));
+    const textFiles = files.filter((file) => FileExtension.txt === this.getExtensionFile(file));
+    const jsonFiles = files.filter((file) => FileExtension.json === this.getExtensionFile(file));
     if (textFiles.length !== 1 || jsonFiles.length !== 1) throw new Error('Files under wrong extension');
     this.validateFileName(textFiles[0]);
     this.validateFileName(jsonFiles[0]);
@@ -66,8 +66,8 @@ export class ValidateAndGetInputsDirectory {
     };
   }
 
-  private getExtensionFile(file: string): fileExtension {
-    return path.extname(file) as fileExtension;
+  private getExtensionFile(file: string): FileExtension {
+    return path.extname(file) as FileExtension;
   }
 
   private validateFileName(file: string) {
