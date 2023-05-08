@@ -7,7 +7,9 @@
     "test:unit": "jest --testMatch='**/*.spec.ts' --testPathPattern"
   },
   "dependencies": {
+    "dotenv": "^16.0.3",
     "inversify": "^6.0.1",
+    "pino": "^8.12.1",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
