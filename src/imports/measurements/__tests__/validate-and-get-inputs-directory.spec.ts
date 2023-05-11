@@ -2,10 +2,10 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import {
-  ValidateAndGetInputsDirectory,
+  ValidateAndGetPathInputsDirectory,
   filesInputDirectory,
   FileExtension,
-} from '../validate-and-get-inputs-directory';
+} from '../validate-and-get-path-inputs-directory';
 import { InputFileName } from '../execute';
 
 describe('ValidateAndGetInputsDirectory', () => {
@@ -53,8 +53,8 @@ describe('ValidateAndGetInputsDirectory', () => {
     it('validates and gets inputs directory', async () => {
       INPUT_DIRECTORY = './__tests__/inputs';
       await createFilesDirectory(inputFileName);
-      const validateAndGetInputsDirectory = new ValidateAndGetInputsDirectory(INPUT_DIRECTORY, inputFileName);
-      const response = await validateAndGetInputsDirectory.validateAndGetInputsDirectory();
+      const validateAndGetInputsDirectory = new ValidateAndGetPathInputsDirectory(INPUT_DIRECTORY, inputFileName);
+      const response = await validateAndGetInputsDirectory.validateAndGetPathInputsDirectory();
       const getInputsDirectory: filesInputDirectory = {
         inputsDirectory: testInputsDirectory,
         fileInputs: {
@@ -69,21 +69,21 @@ describe('ValidateAndGetInputsDirectory', () => {
   it('should throw if directory does not exist', async () => {
     await createFilesDirectory(InputFileName.FrequencyResponse);
     INPUT_DIRECTORY = './unexisting_inputs';
-    const validateAndGetInputsDirectory = new ValidateAndGetInputsDirectory(
+    const validateAndGetInputsDirectory = new ValidateAndGetPathInputsDirectory(
       INPUT_DIRECTORY,
       InputFileName.FrequencyResponse,
     );
-    const response = validateAndGetInputsDirectory.validateAndGetInputsDirectory();
+    const response = validateAndGetInputsDirectory.validateAndGetPathInputsDirectory();
     await expect(response).rejects.toThrow('Unable to find path directory');
   });
 
   it('should throw if directory is empty', async () => {
     INPUT_DIRECTORY = './__tests__/inputs';
-    const validateAndGetInputsDirectory = new ValidateAndGetInputsDirectory(
+    const validateAndGetInputsDirectory = new ValidateAndGetPathInputsDirectory(
       INPUT_DIRECTORY,
       InputFileName.FrequencyResponse,
     );
-    const response = validateAndGetInputsDirectory.validateAndGetInputsDirectory();
+    const response = validateAndGetInputsDirectory.validateAndGetPathInputsDirectory();
     await expect(response).rejects.toThrow('Directory is empty');
   });
 
@@ -91,11 +91,11 @@ describe('ValidateAndGetInputsDirectory', () => {
     await createFilesDirectory(InputFileName.FrequencyResponse);
     await deleteFile(`${InputFileName.FrequencyResponse}${FileExtension.txt}`);
     INPUT_DIRECTORY = './__tests__/inputs';
-    const validateAndGetInputsDirectory = new ValidateAndGetInputsDirectory(
+    const validateAndGetInputsDirectory = new ValidateAndGetPathInputsDirectory(
       INPUT_DIRECTORY,
       InputFileName.FrequencyResponse,
     );
-    const response = validateAndGetInputsDirectory.validateAndGetInputsDirectory();
+    const response = validateAndGetInputsDirectory.validateAndGetPathInputsDirectory();
     await expect(response).rejects.toThrow('Unable to process only one file');
   });
 
@@ -103,11 +103,11 @@ describe('ValidateAndGetInputsDirectory', () => {
     await createFilesDirectory(InputFileName.FrequencyResponse);
     await createFilesDirectory(InputFileName.ImpedanceResponse);
     INPUT_DIRECTORY = './__tests__/inputs';
-    const validateAndGetInputsDirectory = new ValidateAndGetInputsDirectory(
+    const validateAndGetInputsDirectory = new ValidateAndGetPathInputsDirectory(
       INPUT_DIRECTORY,
       InputFileName.FrequencyResponse,
     );
-    const response = validateAndGetInputsDirectory.validateAndGetInputsDirectory();
+    const response = validateAndGetInputsDirectory.validateAndGetPathInputsDirectory();
     await expect(response).rejects.toThrow('Unable to process more than two files');
   });
 
@@ -115,11 +115,11 @@ describe('ValidateAndGetInputsDirectory', () => {
     INPUT_DIRECTORY = './__tests__/inputs';
     await writeTestFile(`${testInputsDirectory}/${InputFileName.FrequencyResponse}${FileExtension.txt}`);
     await writeTestFile(`${testInputsDirectory}/${InputFileName.FrequencyResponse}.md`);
-    const validateAndGetInputsDirectory = new ValidateAndGetInputsDirectory(
+    const validateAndGetInputsDirectory = new ValidateAndGetPathInputsDirectory(
       INPUT_DIRECTORY,
       InputFileName.FrequencyResponse,
     );
-    const response = validateAndGetInputsDirectory.validateAndGetInputsDirectory();
+    const response = validateAndGetInputsDirectory.validateAndGetPathInputsDirectory();
     await expect(response).rejects.toThrow('Files under wrong extension');
   });
 
@@ -127,11 +127,11 @@ describe('ValidateAndGetInputsDirectory', () => {
     INPUT_DIRECTORY = './__tests__/inputs';
     await writeTestFile(`${testInputsDirectory}/${InputFileName.FrequencyResponse}${FileExtension.txt}`);
     await writeTestFile(`${testInputsDirectory}/wrong-naming.json`);
-    const validateAndGetInputsDirectory = new ValidateAndGetInputsDirectory(
+    const validateAndGetInputsDirectory = new ValidateAndGetPathInputsDirectory(
       INPUT_DIRECTORY,
       InputFileName.FrequencyResponse,
     );
-    const response = validateAndGetInputsDirectory.validateAndGetInputsDirectory();
+    const response = validateAndGetInputsDirectory.validateAndGetPathInputsDirectory();
     await expect(response).rejects.toThrow('Files under wrong naming');
   });
 });
