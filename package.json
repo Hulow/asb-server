@@ -1,6 +1,7 @@
 {
   "scripts": {
     "build": "rm -rf dist && tsc",
+    "start": "cd dist/ && node index.js",
     "lint": "eslint --max-warnings=0 .",
     "lint:fix": "eslint --fix --max-warnings=0 .",
     "prepare": "husky install",
