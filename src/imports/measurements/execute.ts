@@ -1,4 +1,4 @@
-import { ValidateAndGetInputsDirectory } from './validate-and-get-inputs-directory';
+import { ValidateAndGetInputsDirectoryPath } from './validate-and-get-inputs-directory-path';
 
 const INPUTS_DIRECTORY = 'inputs';
 
@@ -11,10 +11,10 @@ export enum InputFileName {
 // execute().catch((err) => console.log(err));
 async function execute() {
   try {
-    await new ValidateAndGetInputsDirectory(
+    await new ValidateAndGetInputsDirectoryPath(
       INPUTS_DIRECTORY,
       InputFileName.ImpulseResponse,
-    ).validateAndGetInputsDirectory();
+    ).validateAndGetInputsDirectoryPath();
   } catch (error) {
     console.log(error);
   }
