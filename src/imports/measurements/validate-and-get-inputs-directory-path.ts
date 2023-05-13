@@ -17,12 +17,12 @@ export interface filesInputDirectory {
   fileInputs: FileInputs;
 }
 
-export class ValidateAndGetPathInputsDirectory {
+export class ValidateAndGetInputsDirectoryPath {
   constructor(private readonly inputsDirectory: string, private readonly inputFileName: InputFileName) {
     this.inputsDirectory = path.join(__dirname, inputsDirectory);
   }
 
-  async validateAndGetPathInputsDirectory(): Promise<filesInputDirectory> {
+  async validateAndGetInputsDirectoryPath(): Promise<filesInputDirectory> {
     await this.validateDirectory();
     await this.validateContentDirectory();
     const files = await this.validateAndGetFilePath();
