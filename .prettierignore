@@ -2,4 +2,6 @@ node_modules
 dist
 temp
 .env
-src/scripts/inputs/*
+src/imports/measurements/inputs/*
+src/imports/measurements/
+.eslintignore

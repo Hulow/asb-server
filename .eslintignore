@@ -6,5 +6,5 @@ tmp
 postgres
 jest.config.ts
 ormconfig.js
-src/scripts/inputs/*
-src/scripts/execute.ts
+src/imports/measurements/inputs
+src/imports/measurements/execute.ts
