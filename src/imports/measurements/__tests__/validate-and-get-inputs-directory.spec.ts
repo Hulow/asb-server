@@ -13,8 +13,13 @@ describe('ValidateAndGetInputsDirectory', () => {
   const directory = './inputs';
   const testInputsDirectory = path.join(__dirname, directory);
 
+  beforeEach(async () => {
+   await createTestInputsDirectory()
+  })
+
   afterEach(async () => {
     await cleanFilesDirectory();
+    await deleteTestInputsDirectory();
   });
 
   async function cleanFilesDirectory(): Promise<void> {
@@ -28,6 +33,18 @@ describe('ValidateAndGetInputsDirectory', () => {
 
   async function deleteFile(file: string): Promise<void> {
     return await fs.promises.unlink(`${testInputsDirectory}/${file}`);
+  }
+
+  async function createTestInputsDirectory(): Promise<void> {
+    if (!fs.existsSync(testInputsDirectory)) {
+      return await fs.promises.mkdir(testInputsDirectory);
+    }
+  }
+
+  async function deleteTestInputsDirectory(): Promise<void> {
+    if (fs.existsSync(testInputsDirectory)) {
+      return fs.promises.rmdir(testInputsDirectory);
+    }
   }
 
   async function createFilesDirectory(inputFileName: InputFileName): Promise<void> {
@@ -63,7 +80,7 @@ describe('ValidateAndGetInputsDirectory', () => {
         },
       };
       expect(response).toEqual(getInputsDirectory);
-    });
+    });    
   }
 
   it('should throw if directory does not exist', async () => {
