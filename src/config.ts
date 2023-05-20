@@ -21,7 +21,6 @@ export const config: Config = {
   axios: {
     asbBaseUrl: process.env.ASB_BASE_URL ?? 'http://localhost:3000/api',
     asbKeyUrl: process.env.ASB_KEY_URL ?? 'asb',
-    contentType: 'application/gzip',
   },
   express: {
     port: +(process.env.EXPRESS_SERVER_PORT ?? 3000),

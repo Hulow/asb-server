@@ -5,7 +5,6 @@ import { LoggerOutputPort } from '../../ports/out/logger.output-port';
 export interface AxiosConfig {
   readonly asbBaseUrl: string;
   readonly asbKeyUrl: string;
-  readonly contentType: string;
 }
 
 export class AxiosClient {
@@ -15,7 +14,7 @@ export class AxiosClient {
       baseURL: _config.asbBaseUrl,
       headers: {
         Authorization: _config.asbKeyUrl,
-        'content-type': _config.contentType,
+        'content-type': 'application/gzip',
       },
     });
   }
