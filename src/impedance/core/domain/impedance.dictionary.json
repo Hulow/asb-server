@@ -1,0 +1,74 @@
+{
+  "pistonDiameter": {
+    "naming": "Piston Diameter",
+    "unit": "mm"
+  },
+  "resonanceFrequency": {
+    "naming": "f(s)",
+    "unit": "Hz"
+  },
+  "dcResistance": {
+    "naming": "R(e)",
+    "unit": "Ohms"
+  },
+  "acResistance": {
+    "naming": "Z(max)",
+    "unit": "Ohms"
+  },
+  "mechanicalDamping": {
+    "naming": "Q(ms)",
+    "unit": "unitless"
+  },
+  "electricalDamping": {
+    "naming": "Q(es)",
+    "unit": "unitless"
+  },
+  "totalDamping": {
+    "naming": "Q(ts)",
+    "unit": "unitless"
+  },
+  "equivalenceCompliance": {
+    "naming": "V(as)",
+    "unit": "Liters"
+  },
+  "voiceCoilInductance": {
+    "naming": "L(e)",
+    "unit": "mH"
+  },
+  "efficiency": {
+    "naming": "n(0)",
+    "unit": "%"
+  },
+  "sensitivity": {
+    "naming": "SPL",
+    "unit": "1W/1M"
+  },
+  "coneMass": {
+    "naming": "M(ms)",
+    "unit": "grams"
+  },
+  "suspensionCompliance": {
+    "naming": "C(ms)",
+    "unit": "mm/N"
+  },
+  "forceFactor": {
+    "naming": "BL",
+    "unit": "unitless"
+  },
+  "kR": {
+    "naming": "K(r)",
+    "unit": "unitless"
+  },
+  "xR": {
+    "naming": "X(r)",
+    "unit": "unitless"
+  },
+  "kI": {
+    "naming": "K(i)",
+    "unit": "unitless"
+  },
+  "xI": {
+    "naming": "X(i)",
+    "unit": "unitless"
+  }
+}
