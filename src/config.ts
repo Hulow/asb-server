@@ -32,6 +32,6 @@ export const config: Config = {
     port: +(process.env.POSTGRES_DATABASE_PORT ?? 5432),
     username: process.env.POSTGRES_DATABASE_USER ?? 'docker',
     password: process.env.POSTGRES_DATABASE_PASSWORD ?? 'docker',
-    database: process.env.POSTGRES_DATABASE_NAME ?? 'ts-hexa',
+    database: process.env.POSTGRES_DATABASE_NAME ?? 'asb',
   },
 };
