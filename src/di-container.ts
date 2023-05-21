@@ -7,6 +7,7 @@ import { LoggerOutputPort, LOGGER_OUTPUT_PORT } from './shared/ports/out/logger.
 import { SqlCabinetRepository } from './cabinet/adapters/out/persistence/cabinet.repository.sql';
 import { SqlDriverRepository } from './driver/adapters/out/persistence/driver.repository.sql';
 import { SqlUserRepository } from './user/adapters/out/persistence/user.repository.sql';
+import { SqlImpedanceRepository } from './impedance/adapters/out/persistence/impedance.repository.sql';
 import {
   CabinetRepositoryOutputPort,
   CABINET_REPOSITORY_OUTPUT_PORT,
@@ -19,6 +20,10 @@ import {
   UserRepositoryOutputPort,
   USER_REPOSITORY_OUTPUT_PORT,
 } from './user/core/application/ports/out/user-repository.output-port';
+import {
+  ImpedanceRepositoryOutputPort,
+  IMPEDANCE_REPOSITORY_OUTPUT_PORT,
+} from './impedance/core/application/ports/out/impedance-repository.output-port';
 import { ExpressWebServer } from './shared/adapters/in/express-web-server';
 import { TestController } from './dats/adapters/in/test.controller';
 import { TestInputPort, TEST_INPUT_PORT } from './dats/core/ports/in/test.port';
@@ -53,3 +58,4 @@ container
 container.bind<CabinetRepositoryOutputPort>(CABINET_REPOSITORY_OUTPUT_PORT).to(SqlCabinetRepository);
 container.bind<DriverRepositoryOutputPort>(DRIVER_REPOSITORY_OUTPUT_PORT).to(SqlDriverRepository);
 container.bind<UserRepositoryOutputPort>(USER_REPOSITORY_OUTPUT_PORT).to(SqlUserRepository);
+container.bind<ImpedanceRepositoryOutputPort>(IMPEDANCE_REPOSITORY_OUTPUT_PORT).to(SqlImpedanceRepository);
