@@ -6,6 +6,7 @@ import { PinoLogger } from './shared/adapters/out/pino-logger';
 import { LoggerOutputPort, LOGGER_OUTPUT_PORT } from './shared/ports/out/logger.output-port';
 import { SqlCabinetRepository } from './cabinet/adapters/out/persistence/cabinet.repository.sql';
 import { SqlDriverRepository } from './driver/adapters/out/persistence/driver.repository.sql';
+import { SqlUserRepository } from './user/adapters/out/persistence/user.repository.sql';
 import {
   CabinetRepositoryOutputPort,
   CABINET_REPOSITORY_OUTPUT_PORT,
@@ -14,6 +15,10 @@ import {
   DriverRepositoryOutputPort,
   DRIVER_REPOSITORY_OUTPUT_PORT,
 } from './driver/core/application/ports/out/driver-repository.output-port';
+import {
+  UserRepositoryOutputPort,
+  USER_REPOSITORY_OUTPUT_PORT,
+} from './user/core/application/ports/out/user-repository.output-port';
 import { ExpressWebServer } from './shared/adapters/in/express-web-server';
 import { TestController } from './dats/adapters/in/test.controller';
 import { TestInputPort, TEST_INPUT_PORT } from './dats/core/ports/in/test.port';
@@ -47,3 +52,4 @@ container
   .toDynamicValue(() => new PostgresDataSource(config.postgres, container.get(LOGGER_OUTPUT_PORT)));
 container.bind<CabinetRepositoryOutputPort>(CABINET_REPOSITORY_OUTPUT_PORT).to(SqlCabinetRepository);
 container.bind<DriverRepositoryOutputPort>(DRIVER_REPOSITORY_OUTPUT_PORT).to(SqlDriverRepository);
+container.bind<UserRepositoryOutputPort>(USER_REPOSITORY_OUTPUT_PORT).to(SqlUserRepository);
