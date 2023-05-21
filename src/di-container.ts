@@ -4,7 +4,12 @@ import { config } from './config';
 import { PostgresDataSource } from './shared/adapters/out/postgres-datasource';
 import { PinoLogger } from './shared/adapters/out/pino-logger';
 import { LoggerOutputPort, LOGGER_OUTPUT_PORT } from './shared/ports/out/logger.output-port';
+import { SqlCabinetRepository } from './cabinet/adapters/out/persistence/cabinet.repository.sql';
 import { SqlDriverRepository } from './driver/adapters/out/persistence/driver.repository.sql';
+import {
+  CabinetRepositoryOutputPort,
+  CABINET_REPOSITORY_OUTPUT_PORT,
+} from './cabinet/core/application/ports/out/cabinet-repository.output-port';
 import {
   DriverRepositoryOutputPort,
   DRIVER_REPOSITORY_OUTPUT_PORT,
@@ -40,4 +45,5 @@ container.bind<LoggerOutputPort>(LOGGER_OUTPUT_PORT).toDynamicValue(() => new Pi
 container
   .bind(PostgresDataSource)
   .toDynamicValue(() => new PostgresDataSource(config.postgres, container.get(LOGGER_OUTPUT_PORT)));
+container.bind<CabinetRepositoryOutputPort>(CABINET_REPOSITORY_OUTPUT_PORT).to(SqlCabinetRepository);
 container.bind<DriverRepositoryOutputPort>(DRIVER_REPOSITORY_OUTPUT_PORT).to(SqlDriverRepository);
