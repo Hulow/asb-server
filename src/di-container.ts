@@ -6,6 +6,7 @@ import { PinoLogger } from './shared/adapters/out/pino-logger';
 import { LoggerOutputPort, LOGGER_OUTPUT_PORT } from './shared/ports/out/logger.output-port';
 import { SqlCabinetRepository } from './cabinet/adapters/out/persistence/cabinet.repository.sql';
 import { SqlDriverRepository } from './driver/adapters/out/persistence/driver.repository.sql';
+import { SqlFrequencyRepository } from './frequency/adapters/out/persistence/frequency.repository.sql';
 import { SqlUserRepository } from './user/adapters/out/persistence/user.repository.sql';
 import { SqlImpedanceRepository } from './impedance/adapters/out/persistence/impedance.repository.sql';
 import {
@@ -16,6 +17,10 @@ import {
   DriverRepositoryOutputPort,
   DRIVER_REPOSITORY_OUTPUT_PORT,
 } from './driver/core/application/ports/out/driver-repository.output-port';
+import {
+  FrequencyRepositoryOutputPort,
+  FREQUENCY_REPOSITORY_OUTPUT_PORT,
+} from './frequency/core/application/ports/out/frequency-repository.output-port';
 import {
   UserRepositoryOutputPort,
   USER_REPOSITORY_OUTPUT_PORT,
@@ -57,5 +62,6 @@ container
   .toDynamicValue(() => new PostgresDataSource(config.postgres, container.get(LOGGER_OUTPUT_PORT)));
 container.bind<CabinetRepositoryOutputPort>(CABINET_REPOSITORY_OUTPUT_PORT).to(SqlCabinetRepository);
 container.bind<DriverRepositoryOutputPort>(DRIVER_REPOSITORY_OUTPUT_PORT).to(SqlDriverRepository);
+container.bind<FrequencyRepositoryOutputPort>(FREQUENCY_REPOSITORY_OUTPUT_PORT).to(SqlFrequencyRepository);
 container.bind<UserRepositoryOutputPort>(USER_REPOSITORY_OUTPUT_PORT).to(SqlUserRepository);
 container.bind<ImpedanceRepositoryOutputPort>(IMPEDANCE_REPOSITORY_OUTPUT_PORT).to(SqlImpedanceRepository);
