@@ -4,7 +4,7 @@ import { CabinetRepositoryOutputPort } from '../../../core/application/ports/out
 import { Cabinet } from '../../../core/domain/cabinet';
 
 @injectable()
-export class InMemoryDriverRepository implements CabinetRepositoryOutputPort {
+export class InMemoryCabinetRepository implements CabinetRepositoryOutputPort {
   public readonly cabinets: Cabinet[] = [];
 
   save(cabinet: Cabinet) {
