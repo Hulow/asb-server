@@ -7,6 +7,8 @@ import { LoggerOutputPort, LOGGER_OUTPUT_PORT } from './shared/ports/out/logger.
 import { SqlCabinetRepository } from './cabinet/adapters/out/persistence/cabinet.repository.sql';
 import { SqlDriverRepository } from './driver/adapters/out/persistence/driver.repository.sql';
 import { SqlFrequencyRepository } from './frequency/adapters/out/persistence/frequency.repository.sql';
+import { SqlImpulseRepository } from './impulse/adapters/out/persistence/impulse.repository.sql';
+
 import { SqlUserRepository } from './user/adapters/out/persistence/user.repository.sql';
 import { SqlImpedanceRepository } from './impedance/adapters/out/persistence/impedance.repository.sql';
 import {
@@ -21,6 +23,10 @@ import {
   FrequencyRepositoryOutputPort,
   FREQUENCY_REPOSITORY_OUTPUT_PORT,
 } from './frequency/core/application/ports/out/frequency-repository.output-port';
+import {
+  ImpulseRepositoryOutputPort,
+  IMPULSE_REPOSITORY_OUTPUT_PORT,
+} from './impulse/core/application/ports/out/impulse-repository.output-port';
 import {
   UserRepositoryOutputPort,
   USER_REPOSITORY_OUTPUT_PORT,
@@ -63,5 +69,7 @@ container
 container.bind<CabinetRepositoryOutputPort>(CABINET_REPOSITORY_OUTPUT_PORT).to(SqlCabinetRepository);
 container.bind<DriverRepositoryOutputPort>(DRIVER_REPOSITORY_OUTPUT_PORT).to(SqlDriverRepository);
 container.bind<FrequencyRepositoryOutputPort>(FREQUENCY_REPOSITORY_OUTPUT_PORT).to(SqlFrequencyRepository);
+container.bind<ImpulseRepositoryOutputPort>(IMPULSE_REPOSITORY_OUTPUT_PORT).to(SqlImpulseRepository);
+
 container.bind<UserRepositoryOutputPort>(USER_REPOSITORY_OUTPUT_PORT).to(SqlUserRepository);
 container.bind<ImpedanceRepositoryOutputPort>(IMPEDANCE_REPOSITORY_OUTPUT_PORT).to(SqlImpedanceRepository);
