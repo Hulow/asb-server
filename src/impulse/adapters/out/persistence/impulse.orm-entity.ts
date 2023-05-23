@@ -1,9 +1,10 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, OneToOne } from 'typeorm';
+import { CabinetTypeormEntity } from '../../../../cabinet/adapters/out/persistence/cabinet.orm-entity';
 import { Impulse } from '../../../core/domain/impulse';
 
 @Entity({ name: 'impulse' })
 export class ImpulseTypeormEntity {
-  @PrimaryColumn({ name: 'uid', type: 'uuid', update: false })
+  @PrimaryColumn({ name: 'impulse_uid', type: 'uuid', update: false })
   uid!: string;
 
   @Column({ name: 'measured_by', type: 'varchar' })
@@ -30,20 +31,14 @@ export class ImpulseTypeormEntity {
   @Column({ name: 'measurements', type: 'jsonb' })
   measurements!: object;
 
-  @Column({ name: 'user_id', type: 'float' })
-  userId!: number;
-
-  @Column({ name: 'driver_id', type: 'float' })
-  driverId!: number;
-
-  @Column({ name: 'cabinet_id', type: 'float' })
-  cabinetId!: number;
-
   @CreateDateColumn({ name: 'created_at', type: 'timestamp with time zone' })
   createdAt!: Date;
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt!: Date;
+
+  @OneToOne(() => CabinetTypeormEntity, (cabinet) => cabinet.impulse)
+  cabinet!: CabinetTypeormEntity;
 
   toDomain(): Impulse {
     return new Impulse({
@@ -56,9 +51,6 @@ export class ImpulseTypeormEntity {
       responseWindow: this.responseWindow,
       sampleInterval: this.sampleInterval,
       measurements: this.measurements,
-      userId: this.userId,
-      driverId: this.driverId,
-      cabinetId: this.cabinetId,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     });
@@ -74,9 +66,6 @@ export class ImpulseTypeormEntity {
     entity.responseWindow = frequency.responseWindow;
     entity.sampleInterval = frequency.sampleInterval;
     entity.measurements = frequency.measurements;
-    entity.userId = frequency.userId;
-    entity.driverId = frequency.driverId;
-    entity.cabinetId = frequency.cabinetId;
 
     return entity;
   }
