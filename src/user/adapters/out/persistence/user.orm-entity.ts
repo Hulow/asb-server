@@ -1,9 +1,11 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { CabinetTypeormEntity } from '../../../../cabinet/adapters/out/persistence/cabinet.orm-entity';
+
 import { User } from '../../../core/domain/user';
 
 @Entity({ name: 'user' })
 export class UserTypeormEntity {
-  @PrimaryColumn({ name: 'uid', type: 'uuid', update: false })
+  @PrimaryColumn({ name: 'user_uid', type: 'uuid', update: false })
   uid!: string;
 
   @Column({ name: 'first_name', type: 'varchar' })
@@ -32,6 +34,9 @@ export class UserTypeormEntity {
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt!: Date;
+
+  @OneToMany(() => CabinetTypeormEntity, (cabinet) => cabinet.user, { eager: true })
+  cabinets!: CabinetTypeormEntity[];
 
   toDomain(): User {
     return new User({
