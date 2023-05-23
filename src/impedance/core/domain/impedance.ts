@@ -19,9 +19,6 @@ export interface ImpedanceProps {
   xR: number;
   kI: number;
   xI: number;
-  userId: number;
-  driverId: number;
-  cabinetId: number;
 }
 
 export class Impedance extends DomainEntity {
@@ -43,9 +40,6 @@ export class Impedance extends DomainEntity {
   readonly xR: number;
   readonly kI: number;
   readonly xI: number;
-  readonly userId: number;
-  readonly driverId: number;
-  readonly cabinetId: number;
 
   constructor(props: ImpedanceProps & EntityProps) {
     super(props);
@@ -68,8 +62,5 @@ export class Impedance extends DomainEntity {
     this.xR = props.xR;
     this.kI = props.kI;
     this.xI = props.xI;
-    this.userId = props.userId;
-    this.driverId = props.driverId;
-    this.cabinetId = props.cabinetId;
   }
 }

@@ -1,9 +1,10 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm';
 import { Impedance } from '../../../core/domain/impedance';
+import { CabinetTypeormEntity } from '../../../../cabinet/adapters/out/persistence/cabinet.orm-entity';
 
 @Entity({ name: 'impedance' })
 export class ImpedanceTypeormEntity {
-  @PrimaryColumn({ name: 'uid', type: 'uuid', update: false })
+  @PrimaryColumn({ name: 'impedance_uid', type: 'uuid', update: false })
   uid!: string;
 
   @Column({ name: 'piston_diameter', type: 'float' })
@@ -60,20 +61,15 @@ export class ImpedanceTypeormEntity {
   @Column({ name: 'xi', type: 'float' })
   xI!: number;
 
-  @Column({ name: 'user_id', type: 'float' })
-  userId!: number;
-
-  @Column({ name: 'driver_id', type: 'float' })
-  driverId!: number;
-
-  @Column({ name: 'cabinet_id', type: 'float' })
-  cabinetId!: number;
-
   @CreateDateColumn({ name: 'created_at', type: 'timestamp with time zone' })
   createdAt!: Date;
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt!: Date;
+
+  @OneToOne(() => CabinetTypeormEntity, (cabinet) => cabinet.impedance)
+  @JoinColumn()
+  cabinet!: CabinetTypeormEntity;
 
   toDomain(): Impedance {
     return new Impedance({
@@ -96,9 +92,6 @@ export class ImpedanceTypeormEntity {
       xR: this.xR,
       kI: this.kI,
       xI: this.xI,
-      userId: this.userId,
-      driverId: this.driverId,
-      cabinetId: this.cabinetId,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     });
