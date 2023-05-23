@@ -9,9 +9,6 @@ export interface ImpulseProps {
   responseWindow: string;
   sampleInterval: string;
   measurements: object;
-  userId: number;
-  driverId: number;
-  cabinetId: number;
 }
 
 export class Impulse extends DomainEntity {
@@ -23,9 +20,6 @@ export class Impulse extends DomainEntity {
   readonly responseWindow: string;
   readonly sampleInterval: string;
   readonly measurements: object;
-  readonly userId: number;
-  readonly driverId: number;
-  readonly cabinetId: number;
   constructor(props: ImpulseProps & EntityProps) {
     super(props);
 
@@ -37,8 +31,5 @@ export class Impulse extends DomainEntity {
     this.responseWindow = props.responseWindow;
     this.sampleInterval = props.sampleInterval;
     this.measurements = props.measurements;
-    this.userId = props.userId;
-    this.driverId = props.driverId;
-    this.cabinetId = props.cabinetId;
   }
 }

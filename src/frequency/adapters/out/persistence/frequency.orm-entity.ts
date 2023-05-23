@@ -1,9 +1,11 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, JoinColumn, OneToOne } from 'typeorm';
+import { CabinetTypeormEntity } from '../../../../cabinet/adapters/out/persistence/cabinet.orm-entity';
+
 import { Frequency } from '../../../core/domain/frequency';
 
 @Entity({ name: 'frequency' })
 export class FrequencyTypeormEntity {
-  @PrimaryColumn({ name: 'uid', type: 'uuid', update: false })
+  @PrimaryColumn({ name: 'driver_uid', type: 'uuid', update: false })
   uid!: string;
 
   @Column({ name: 'measured_by', type: 'varchar' })
@@ -12,8 +14,8 @@ export class FrequencyTypeormEntity {
   @Column({ name: 'measured_from', type: 'varchar' })
   measuredFrom!: string;
 
-  @Column({ name: 'sampling', type: 'varchar' })
-  sampling!: string;
+  @Column({ name: 'sweep_length', type: 'varchar' })
+  sweepLength!: string;
 
   @Column({ name: 'measured_at', type: 'timestamp with time zone' })
   measuredAt!: Date;
@@ -24,17 +26,14 @@ export class FrequencyTypeormEntity {
   @Column({ name: 'target_level', type: 'float' })
   targetLevel!: number;
 
-  @Column({ name: 'measurement_note', type: 'varchar' })
-  measurementNote!: string;
+  @Column({ name: 'note', type: 'varchar' })
+  note!: string;
 
   @Column({ name: 'smoothing', type: 'varchar' })
   smoothing!: string;
 
   @Column({ name: 'measurements', type: 'jsonb' })
   measurements!: object;
-
-  @Column({ name: 'user_id', type: 'float' })
-  userId!: number;
 
   @Column({ name: 'driver_id', type: 'float' })
   driverId!: number;
@@ -48,21 +47,22 @@ export class FrequencyTypeormEntity {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt!: Date;
 
+  @OneToOne(() => CabinetTypeormEntity, (cabinet) => cabinet.frequency)
+  @JoinColumn()
+  cabinet!: CabinetTypeormEntity;
+
   toDomain(): Frequency {
     return new Frequency({
       uid: this.uid,
       measuredBy: this.measuredBy,
       measuredFrom: this.measuredFrom,
-      sampling: this.sampling,
+      sweepLength: this.sweepLength,
       measuredAt: this.measuredAt,
       frequencyWeightings: this.frequencyWeightings,
       targetLevel: this.targetLevel,
-      measurementNote: this.measurementNote,
+      note: this.note,
       smoothing: this.smoothing,
       measurements: this.measurements,
-      userId: this.userId,
-      driverId: this.driverId,
-      cabinetId: this.cabinetId,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     });
@@ -72,16 +72,13 @@ export class FrequencyTypeormEntity {
     const entity = new FrequencyTypeormEntity();
     entity.measuredBy = frequency.measuredBy;
     entity.measuredFrom = frequency.measuredFrom;
-    entity.sampling = frequency.sampling;
+    entity.sweepLength = frequency.sweepLength;
     entity.measuredAt = frequency.measuredAt;
     entity.frequencyWeightings = frequency.frequencyWeightings;
     entity.targetLevel = frequency.targetLevel;
-    entity.measurementNote = frequency.measurementNote;
+    entity.note = frequency.note;
     entity.smoothing = frequency.smoothing;
     entity.measurements = frequency.measurements;
-    entity.userId = frequency.userId;
-    entity.driverId = frequency.driverId;
-    entity.cabinetId = frequency.cabinetId;
 
     return entity;
   }

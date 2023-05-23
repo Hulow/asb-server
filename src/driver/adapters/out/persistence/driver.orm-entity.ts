@@ -1,9 +1,10 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Driver } from '../../../core/domain/driver';
+import { CabinetTypeormEntity } from '../../../../cabinet/adapters/out/persistence/cabinet.orm-entity';
 
 @Entity({ name: 'driver' })
 export class DriverTypeormEntity {
-  @PrimaryColumn({ name: 'uid', type: 'uuid', update: false })
+  @PrimaryColumn({ name: 'driver_uid', type: 'uuid', update: false })
   uid!: string;
 
   @Column({ name: 'brand_name', type: 'varchar' })
@@ -15,6 +16,9 @@ export class DriverTypeormEntity {
   @Column({ name: 'driver_type', type: 'varchar' })
   driverType!: string;
 
+  @Column({ name: 'manufacturing_year', type: 'integer' })
+  manufacturingYear!: number;
+
   @Column({ name: 'nominal_diameter', type: 'float' })
   nominalDiameter!: number;
 
@@ -24,17 +28,15 @@ export class DriverTypeormEntity {
   @Column({ name: 'continuous_power_handling', type: 'float' })
   continuousPowerHandling!: number;
 
-  @Column({ name: 'user_id', type: 'integer' })
-  userId!: number;
-
-  @Column({ name: 'cabinet_id', type: 'integer' })
-  cabinetId!: number;
-
   @CreateDateColumn({ name: 'created_at', type: 'timestamp with time zone' })
   createdAt!: Date;
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt!: Date;
+
+  @ManyToOne(() => CabinetTypeormEntity, (cabinet) => cabinet.drivers)
+  @JoinColumn({ name: 'cabinet_uid' })
+  cabinet!: CabinetTypeormEntity;
 
   toDomain(): Driver {
     return new Driver({
@@ -42,11 +44,10 @@ export class DriverTypeormEntity {
       brandName: this.brandName,
       productName: this.productName,
       driverType: this.driverType,
+      manufacturingYear: this.manufacturingYear,
       nominalDiameter: this.nominalDiameter,
       nominalImpedance: this.nominalImpedance,
       continuousPowerHandling: this.continuousPowerHandling,
-      userId: this.userId,
-      cabinetId: this.cabinetId,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     });
@@ -57,11 +58,10 @@ export class DriverTypeormEntity {
     entity.brandName = driver.brandName;
     entity.productName = driver.driverType;
     entity.driverType = driver.driverType;
+    entity.manufacturingYear = driver.manufacturingYear;
     entity.nominalDiameter = driver.nominalDiameter;
     entity.nominalImpedance = driver.nominalImpedance;
     entity.continuousPowerHandling = driver.continuousPowerHandling;
-    entity.userId = driver.userId;
-    entity.cabinetId = driver.cabinetId;
     return entity;
   }
 }

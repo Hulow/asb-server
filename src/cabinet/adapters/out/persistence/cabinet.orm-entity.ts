@@ -1,9 +1,24 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Cabinet } from '../../../core/domain/cabinet';
+import { DriverTypeormEntity } from '../../../../driver/adapters/out/persistence/driver.orm-entity';
+import { UserTypeormEntity } from '../../../../user/adapters/out/persistence/user.orm-entity';
+import { ImpulseTypeormEntity } from '../../../../impulse/adapters/out/persistence/impulse.orm-entity';
+import { FrequencyTypeormEntity } from '../../../../frequency/adapters/out/persistence/frequency.orm-entity';
+import { ImpedanceTypeormEntity } from '../../../../impedance/adapters/out/persistence/impedance.orm-entity';
 
 @Entity({ name: 'cabinet' })
 export class CabinetTypeormEntity {
-  @PrimaryColumn({ name: 'uid', type: 'uuid', update: false })
+  @PrimaryColumn({ name: 'cabinet_uid', type: 'uuid', update: false })
   uid!: string;
 
   @Column({ name: 'brand_name', type: 'varchar' })
@@ -27,14 +42,33 @@ export class CabinetTypeormEntity {
   @Column({ name: 'description', type: 'varchar' })
   description!: string;
 
-  @Column({ name: 'user_id', type: 'integer' })
-  userId!: number;
+  @Column({ name: 'driver_id', type: 'integer' })
+  driverId!: number;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp with time zone' })
   createdAt!: Date;
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt!: Date;
+
+  @OneToMany(() => DriverTypeormEntity, (driver) => driver.cabinet, { eager: true })
+  drivers!: DriverTypeormEntity[];
+
+  @ManyToOne(() => UserTypeormEntity, (user) => user.cabinets)
+  @JoinColumn({ name: 'user_uid' })
+  user!: UserTypeormEntity;
+
+  @OneToOne(() => ImpulseTypeormEntity, (impulse) => impulse.cabinet)
+  @JoinColumn({ name: 'impulse_uid' })
+  impulse!: ImpulseTypeormEntity;
+
+  @OneToOne(() => FrequencyTypeormEntity, (frequency) => frequency.cabinet)
+  @JoinColumn({ name: 'frequency_uid' })
+  frequency!: FrequencyTypeormEntity;
+
+  @OneToOne(() => ImpedanceTypeormEntity, (impedance) => impedance.cabinet)
+  @JoinColumn({ name: 'impedance_uid' })
+  impedance!: ImpedanceTypeormEntity;
 
   toDomain(): Cabinet {
     return new Cabinet({
@@ -46,7 +80,7 @@ export class CabinetTypeormEntity {
       dimension: this.dimension,
       manufacturingYear: this.manufacturingYear,
       description: this.description,
-      userId: this.userId,
+      driverId: this.driverId,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     });
@@ -61,7 +95,6 @@ export class CabinetTypeormEntity {
     entity.dimension = cabinet.dimension;
     entity.manufacturingYear = cabinet.manufacturingYear;
     entity.description = cabinet.description;
-    entity.userId = cabinet.userId;
     return entity;
   }
 }
