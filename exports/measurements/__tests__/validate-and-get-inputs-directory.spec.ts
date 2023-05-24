@@ -14,8 +14,8 @@ describe('ValidateAndGetInputsDirectory', () => {
   const testInputsDirectory = path.join(__dirname, directory);
 
   beforeEach(async () => {
-   await createTestInputsDirectory()
-  })
+    await createTestInputsDirectory();
+  });
 
   afterEach(async () => {
     await cleanFilesDirectory();
@@ -80,7 +80,7 @@ describe('ValidateAndGetInputsDirectory', () => {
         },
       };
       expect(response).toEqual(getInputsDirectory);
-    });    
+    });
   }
 
   it('should throw if directory does not exist', async () => {

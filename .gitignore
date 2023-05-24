@@ -3,4 +3,4 @@ dist
 tmp
 .env
 postgres
-src/imports/measurements/inputs/*
+exports/measurements/inputs/*
