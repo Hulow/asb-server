@@ -3,10 +3,10 @@ import * as path from 'path';
 
 import {
   ValidateAndGetInputsDirectoryPath,
-  filesInputDirectory,
+  FilesInputDirectory,
   FileExtension,
 } from '../validate-and-get-inputs-directory-path';
-import { InputFileName } from '../execute';
+import { InputFileName } from '../export-measurements';
 
 describe('ValidateAndGetInputsDirectory', () => {
   let INPUT_DIRECTORY: string;
@@ -72,12 +72,10 @@ describe('ValidateAndGetInputsDirectory', () => {
       await createFilesDirectory(inputFileName);
       const validateAndGetInputsDirectory = new ValidateAndGetInputsDirectoryPath(INPUT_DIRECTORY, inputFileName);
       const response = await validateAndGetInputsDirectory.validateAndGetInputsDirectoryPath();
-      const getInputsDirectory: filesInputDirectory = {
-        inputsDirectory: testInputsDirectory,
-        fileInputs: {
-          txtFile: `${inputFileName}${FileExtension.txt}`,
-          jsonFile: `${inputFileName}${FileExtension.json}`,
-        },
+      INPUT_DIRECTORY = './inputs';
+      const getInputsDirectory: FilesInputDirectory = {
+        txtFilePath: `${path.join(__dirname, INPUT_DIRECTORY)}/${inputFileName}${FileExtension.txt}`,
+        jsonFilePath: `${path.join(__dirname, INPUT_DIRECTORY)}/${inputFileName}${FileExtension.json}`,
       };
       expect(response).toEqual(getInputsDirectory);
     });

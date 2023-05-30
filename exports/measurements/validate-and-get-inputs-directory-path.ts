@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { InputFileName } from './execute';
+import { InputFileName } from './export-measurements';
 
 export enum FileExtension {
   txt = '.txt',
@@ -12,9 +12,9 @@ interface FileInputs {
   jsonFile: string;
 }
 
-export interface filesInputDirectory {
-  inputsDirectory: string;
-  fileInputs: FileInputs;
+export interface FilesInputDirectory {
+  txtFilePath: string;
+  jsonFilePath: string;
 }
 
 export class ValidateAndGetInputsDirectoryPath {
@@ -22,17 +22,14 @@ export class ValidateAndGetInputsDirectoryPath {
     this.inputsDirectory = path.join(__dirname, inputsDirectory);
   }
 
-  async validateAndGetInputsDirectoryPath(): Promise<filesInputDirectory> {
+  async validateAndGetInputsDirectoryPath(): Promise<FilesInputDirectory> {
     await this.validateDirectory();
     await this.validateContentDirectory();
-    const files = await this.validateAndGetFilePath();
-    const { txtFile, jsonFile } = files;
+    const filesPath = await this.validateAndGetFilePath();
+    const { txtFile, jsonFile } = filesPath;
     return {
-      inputsDirectory: this.inputsDirectory,
-      fileInputs: {
-        txtFile: txtFile,
-        jsonFile: jsonFile,
-      },
+      txtFilePath: `${this.inputsDirectory}/${txtFile}`,
+      jsonFilePath: `${this.inputsDirectory}/${jsonFile}`,
     };
   }
 
@@ -70,7 +67,7 @@ export class ValidateAndGetInputsDirectoryPath {
     return path.extname(file) as FileExtension;
   }
 
-  private validateFileName(file: string) {
+  private validateFileName(file: string): void {
     if (!path.parse(file).name.includes(this.inputFileName)) throw new Error('Files under wrong naming');
   }
 }
