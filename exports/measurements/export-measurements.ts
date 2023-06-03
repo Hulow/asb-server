@@ -1,5 +1,5 @@
 import { ValidateAndGetInputsDirectoryPath } from './validate-and-get-inputs-directory-path';
-import { ValidateAndReadMeasurements } from './validate-and-read-measurements';
+import { ValidateAndReadMeasurement } from './validate-and-read-measurement';
 
 const INPUTS_DIRECTORY = 'inputs';
 
@@ -16,7 +16,7 @@ async function exportMeasurement() {
       INPUTS_DIRECTORY,
       InputFileName.ImpedanceResponse,
     ).validateAndGetInputsDirectoryPath();
-    new ValidateAndReadMeasurements(inputsDirectoryPath).validateAndReadMeasurements();
+    await new ValidateAndReadMeasurement(inputsDirectoryPath).validateAndReadMeasurement();
   } catch (error) {
     console.log(error);
   }
