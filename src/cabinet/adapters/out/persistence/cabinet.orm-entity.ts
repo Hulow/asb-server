@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 import { Cabinet } from '../../../core/domain/cabinet';
 import { DriverTypeormEntity } from '../../../../driver/adapters/out/persistence/driver.orm-entity';
-import { UserTypeormEntity } from '../../../../user/adapters/out/persistence/user.orm-entity';
+import { OwnerTypeormEntity } from '../../../../owner/adapters/out/persistence/owner.orm-entity';
 import { ImpulseTypeormEntity } from '../../../../impulse/adapters/out/persistence/impulse.orm-entity';
 import { FrequencyTypeormEntity } from '../../../../frequency/adapters/out/persistence/frequency.orm-entity';
 import { ImpedanceTypeormEntity } from '../../../../impedance/adapters/out/persistence/impedance.orm-entity';
@@ -54,9 +54,9 @@ export class CabinetTypeormEntity {
   @OneToMany(() => DriverTypeormEntity, (driver) => driver.cabinet, { eager: true })
   drivers!: DriverTypeormEntity[];
 
-  @ManyToOne(() => UserTypeormEntity, (user) => user.cabinets)
-  @JoinColumn({ name: 'user_uid' })
-  user!: UserTypeormEntity;
+  @ManyToOne(() => OwnerTypeormEntity, (owner) => owner.cabinets)
+  @JoinColumn({ name: 'owner_uid' })
+  owner!: OwnerTypeormEntity;
 
   @OneToOne(() => ImpulseTypeormEntity, (impulse) => impulse.cabinet)
   @JoinColumn({ name: 'impulse_uid' })

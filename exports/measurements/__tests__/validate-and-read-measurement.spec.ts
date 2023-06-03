@@ -59,7 +59,7 @@ describe('ValidateAndReadMeasurement', () => {
   it('validates and read measurement', async () => {
     INPUT_DIRECTORY = path.join(__dirname, directory);
     const metadata = {
-      userUid: '1',
+      ownerUid: '1',
       cabinetUid: '2',
       driverUid: '2',
     };
@@ -76,7 +76,7 @@ describe('ValidateAndReadMeasurement', () => {
 
     const response = new ValidateAndReadMeasurement(filesInputDirectory).validateAndReadMeasurement();
     const mappedMeasurement: MappedMeasurement = {
-      userUid: '1',
+      ownerUid: '1',
       cabinetUid: '2',
       driverUid: '2',
       measurements: 'Testing .txt file',
@@ -87,7 +87,7 @@ describe('ValidateAndReadMeasurement', () => {
   it('should throw if TXT file is empty', async () => {
     INPUT_DIRECTORY = path.join(__dirname, directory);
     const metadata = {
-      userUid: '1',
+      ownerUid: '1',
       cabinetUid: '2',
       driverUid: '2',
     };
@@ -123,7 +123,7 @@ describe('ValidateAndReadMeasurement', () => {
   it('should throw if one key is missing from JSON file', async () => {
     INPUT_DIRECTORY = path.join(__dirname, directory);
     const metadata = {
-      userUid: '1',
+      ownerUid: '1',
       cabinetUid: '2',
     };
     await writeTextFile(
@@ -144,7 +144,7 @@ describe('ValidateAndReadMeasurement', () => {
   it('should throw if wrong data type from JSON file', async () => {
     INPUT_DIRECTORY = path.join(__dirname, directory);
     const metadata = {
-      userUid: '1',
+      ownerUid: '1',
       cabinetUid: '2',
       driverUid: 3,
     };
