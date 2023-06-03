@@ -9,13 +9,13 @@ interface Measurement {
 }
 
 interface MeasurementMetadata {
-  userUid: string;
+  ownerUid: string;
   cabinetUid: string;
   driverUid: string;
 }
 
 export interface MappedMeasurement {
-  userUid: string;
+  ownerUid: string;
   cabinetUid: string;
   driverUid: string;
   measurements: string;
@@ -56,7 +56,7 @@ export class ValidateAndReadMeasurement {
   private mapMeasurements(measurements: Measurement): MappedMeasurement {
     const { metadata, data } = measurements;
     return {
-      userUid: this.validateValue('userUid', metadata.userUid),
+      ownerUid: this.validateValue('ownerUid', metadata.ownerUid),
       cabinetUid: this.validateValue('cabinetUid', metadata.cabinetUid),
       driverUid: this.validateValue('driverUid', metadata.driverUid),
       measurements: this.validateValue('measurements', data),

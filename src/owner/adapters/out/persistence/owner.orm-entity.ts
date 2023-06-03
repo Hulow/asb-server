@@ -1,11 +1,11 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { CabinetTypeormEntity } from '../../../../cabinet/adapters/out/persistence/cabinet.orm-entity';
 
-import { User } from '../../../core/domain/user';
+import { Owner } from '../../../core/domain/owner';
 
-@Entity({ name: 'user' })
-export class UserTypeormEntity {
-  @PrimaryColumn({ name: 'user_uid', type: 'uuid', update: false })
+@Entity({ name: 'owner' })
+export class OwnerTypeormEntity {
+  @PrimaryColumn({ name: 'owner_uid', type: 'uuid', update: false })
   uid!: string;
 
   @Column({ name: 'first_name', type: 'varchar' })
@@ -14,8 +14,8 @@ export class UserTypeormEntity {
   @Column({ name: 'last_name', type: 'varchar' })
   lastName!: string;
 
-  @Column({ name: 'username', type: 'varchar' })
-  username!: string;
+  @Column({ name: 'ownername', type: 'varchar' })
+  ownername!: string;
 
   @Column({ name: 'email', type: 'varchar' })
   email!: string;
@@ -35,15 +35,15 @@ export class UserTypeormEntity {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt!: Date;
 
-  @OneToMany(() => CabinetTypeormEntity, (cabinet) => cabinet.user, { eager: true })
+  @OneToMany(() => CabinetTypeormEntity, (cabinet) => cabinet.owner, { eager: true })
   cabinets!: CabinetTypeormEntity[];
 
-  toDomain(): User {
-    return new User({
+  toDomain(): Owner {
+    return new Owner({
       uid: this.uid,
       firstName: this.firstName,
       lastName: this.lastName,
-      username: this.username,
+      ownername: this.ownername,
       email: this.email,
       phoneNumber: this.phoneNumber,
       city: this.city,
@@ -53,15 +53,15 @@ export class UserTypeormEntity {
     });
   }
 
-  static fromDomain(user: User): UserTypeormEntity {
-    const entity = new UserTypeormEntity();
-    entity.firstName = user.firstName;
-    entity.lastName = user.lastName;
-    entity.username = user.username;
-    entity.email = user.email;
-    entity.phoneNumber = user.phoneNumber;
-    entity.city = user.city;
-    entity.description = user.description;
+  static fromDomain(owner: Owner): OwnerTypeormEntity {
+    const entity = new OwnerTypeormEntity();
+    entity.firstName = owner.firstName;
+    entity.lastName = owner.lastName;
+    entity.ownername = owner.ownername;
+    entity.email = owner.email;
+    entity.phoneNumber = owner.phoneNumber;
+    entity.city = owner.city;
+    entity.description = owner.description;
     return entity;
   }
 }
