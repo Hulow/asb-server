@@ -17,6 +17,7 @@ export interface ExpressConfig {
   readonly port: number;
   readonly hostname: string;
   readonly corsOrigin: string;
+  readonly asbKeyUrl: string;
 }
 
 @injectable()
@@ -34,6 +35,8 @@ export class ExpressWebServer {
     this.app.use(cors({ origin: this._config.corsOrigin }));
     this.app.use(express.json({ limit: '16mb' }));
     this.app.use(express.urlencoded({ extended: true, limit: '16mb' }));
+
+    this._setupAuthorization();
 
     this._setBasicRoutes();
 
@@ -61,6 +64,18 @@ export class ExpressWebServer {
         this._logger.error('Error while stopping express server', err);
         rej(err);
       });
+    });
+  }
+
+  private _setupAuthorization() {
+    this.app.use((_request: Request, response: Response, _next: NextFunction) => {
+      if (!_request.headers.authorization) {
+        return response.status(403).json({ error: 'Forbidden' });
+      }
+      if (_request.headers.authorization !== this._config.asbKeyUrl) {
+        return response.status(401).json({ error: 'Unauthorized' });
+      }
+      return _next();
     });
   }
 
