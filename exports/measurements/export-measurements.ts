@@ -1,6 +1,5 @@
 import { ValidateAndGetInputsDirectoryPath } from './validate-and-get-inputs-directory-path';
-import { ValidateAndReadMeasurement, MappedMeasurement } from './validate-and-read-measurement';
-import { CompressAndEncryptData } from '../compress-and-encrypt-data';
+import { ValidateAndReadMeasurement } from './validate-and-read-measurement';
 
 const INPUTS_DIRECTORY = 'inputs';
 
@@ -17,8 +16,7 @@ async function exportMeasurement() {
       INPUTS_DIRECTORY,
       InputFileName.ImpedanceResponse,
     ).validateAndGetInputsDirectoryPath();
-    const measurement: MappedMeasurement = await new ValidateAndReadMeasurement(inputsDirectoryPath).validateAndReadMeasurement();
-    new CompressAndEncryptData(measurement).compressAndEncryptData()
+    await new ValidateAndReadMeasurement(inputsDirectoryPath).validateAndReadMeasurement();
 
   } catch (error) {
     console.log(error);
