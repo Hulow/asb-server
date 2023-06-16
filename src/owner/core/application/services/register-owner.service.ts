@@ -12,15 +12,10 @@ export class RegisterOwnerService implements RegisterOwnerInputPort {
   async handler(input: RegisterOwnerInput): Promise<Owner> {
     const owner = new Owner({ ...input });
 
-    try {
-      const existingOwner = await this._ownerRepository.getByOwnername(input.ownername);
-      if (existingOwner) {
-        throw new OwnerAlreadyExists(existingOwner.ownername);
-      }
-      return await this._ownerRepository.save(owner);
-    } catch (error) {
-      console.log(error);
-      throw error;
+    const existingOwner = await this._ownerRepository.getByOwnername(input.ownername);
+    if (existingOwner) {
+      throw new OwnerAlreadyExists(existingOwner.ownername);
     }
+    return await this._ownerRepository.save(owner);
   }
 }

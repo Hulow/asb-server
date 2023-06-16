@@ -15,6 +15,16 @@ export enum RegisterOwnerPattern {
   description = 'description',
 }
 
+const registerOwnerPattern = [
+  RegisterOwnerPattern.firstName,
+  RegisterOwnerPattern.lastName,
+  RegisterOwnerPattern.ownername,
+  RegisterOwnerPattern.email,
+  RegisterOwnerPattern.phoneNumber,
+  RegisterOwnerPattern.city,
+  RegisterOwnerPattern.description,
+];
+
 export type RegisterOwnerBody = RegisterOwnerInput;
 
 export class ExportOwner {
