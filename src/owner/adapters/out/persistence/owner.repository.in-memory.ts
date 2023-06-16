@@ -11,4 +11,12 @@ export class InMemoryOwnerRepository implements OwnerRepositoryOutputPort {
     this.owners.push(new Owner({ ...owner }));
     return Promise.resolve(owner);
   }
+
+  async getByOwnername(ownername: string) {
+    const _owner = this.owners.find((owner) => owner.ownername === ownername);
+    if (!_owner) return undefined;
+
+    const user = new Owner({ ..._owner });
+    return Promise.resolve(user);
+  }
 }
