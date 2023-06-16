@@ -2,7 +2,7 @@ import cors from 'cors';
 import express, { Express, NextFunction, Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import { Server } from 'http';
-import { HttpError, isHttpError } from 'http-errors';
+import { HttpError } from 'http-errors';
 import { injectable } from 'inversify';
 
 import { LoggerOutputPort } from '../../ports/out/logger.output-port';
@@ -97,13 +97,18 @@ export class ExpressWebServer {
   private _setupErrorHandler() {
     this.app.use((err: Error | HttpError, _request: Request, response: Response, _next: NextFunction) => {
       this._logger.error(err);
+      if (response.headersSent) {
+        return;
+      }
 
-      if (response.headersSent) return;
-
-      if (isHttpError(err) && err.expose) {
-        response.status(err.statusCode).send({ error: err.message });
-      } else {
-        response.status(500).send({ error: 'Internal Server Error' });
+      switch (err.message) {
+        case 'Unauthorized': {
+          response.status(401).send({ error: 'Unauthorized' });
+          break;
+        }
+        default: {
+          response.status(500).send({ error: err.message });
+        }
       }
     });
   }
