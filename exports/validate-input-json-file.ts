@@ -1,20 +1,23 @@
 /* eslint-disable */
+import { RegisterOwnerPattern } from './owner/export-owner';
+
+export type RegisterEntityOptions = RegisterOwnerPattern;
 
 export class ValidateInputJsonFile {
-  constructor(private readonly data: object, private readonly entityOptions: string[]) {
+  constructor(private readonly data: object, private readonly registerEntityOptions: RegisterEntityOptions[]) {
     this.data = data;
-    this.entityOptions = entityOptions;
+    this.registerEntityOptions = registerEntityOptions;
   }
 
   async validateInput(): Promise<void> {
-    const keys: string[] = Object.keys(this.data);
-    this.validateInputLength(keys);
-    this.validateInputKeys(keys);
+    const inputKeys: string[] = Object.keys(this.data);
+    this.validateInputLength(inputKeys);
+    this.validateInputKeys(inputKeys);
     this.validateInputValue();
   }
 
   private validateInputLength(keys: string[]): void {
-    if (this.entityOptions.length !== keys.length) throw new Error('Unexpected input object length');
+    if (this.registerEntityOptions.length !== keys.length) throw new Error('Unexpected input object length');
   }
 
   private validateInputKeys(keys: string[]): void {
@@ -23,8 +26,8 @@ export class ValidateInputJsonFile {
     }
   }
 
-  private validateKey(key: string): void {
-    if (!this.entityOptions.includes(key)) throw new Error('Wrong key from input object');
+  private validateKey(key: any): void {
+    if (!this.registerEntityOptions.includes(key)) throw new Error('Wrong key from input object');
   }
 
   private validateInputValue(): void {
