@@ -36,9 +36,12 @@ import {
   IMPEDANCE_REPOSITORY_OUTPUT_PORT,
 } from './impedance/core/application/ports/out/impedance-repository.output-port';
 import { ExpressWebServer } from './shared/adapters/in/express-web-server';
-import { TestController } from './dats/adapters/in/test.controller';
-import { TestInputPort, TEST_INPUT_PORT } from './dats/core/ports/in/test.port';
-import { TestService } from './dats/core/services/test.service';
+import {
+  RegisterOwnerInputPort,
+  REGISTER_OWNER_INPUT_PORT,
+} from './owner/core/application/ports/in/register-owner.input-port';
+import { RegisterOwnerService } from './owner/core/application/services/register-owner.service';
+import { RegisterOwnerController } from './owner/adapters/in/web/register-owner.controller';
 
 export const container = new Container({
   autoBindInjectable: true,
@@ -50,14 +53,14 @@ export const container = new Container({
  *  input/driving/primary adapters
  */
 container.bind(ExpressWebServer).toDynamicValue(() => {
-  const controllers = [container.get(TestController)];
+  const controllers = [container.get(RegisterOwnerController)];
   return new ExpressWebServer(config.express, container.get(LOGGER_OUTPUT_PORT), controllers);
 });
 
 /**
  *  application services
  */
-container.bind<TestInputPort>(TEST_INPUT_PORT).to(TestService);
+container.bind<RegisterOwnerInputPort>(REGISTER_OWNER_INPUT_PORT).to(RegisterOwnerService);
 
 /**
  *  output/driven/secondary adapters
