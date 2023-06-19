@@ -1,38 +1,55 @@
-import axios, { AxiosInstance } from 'axios';
-import zlib from 'zlib';
-
-import { LoggerOutputPort } from '../../ports/out/logger.output-port';
-
+import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
+import { config } from '../../../config';
 export interface AxiosConfig {
   readonly asbBaseUrl: string;
   readonly asbKeyUrl: string;
 }
+export interface MappedAxiosErrorResponse {
+  status: number;
+  statusText: string;
+  message: string;
+}
+
+interface AxiosErrorResponse {
+  status: number;
+  statusText: string;
+  data: AxiosErrorData;
+}
+
+interface AxiosErrorData {
+  error: string;
+}
 
 export class AxiosClient {
   protected readonly instance: AxiosInstance;
-  constructor(private readonly _config: AxiosConfig, private _logger: LoggerOutputPort) {
+  constructor() {
     this.instance = axios.create({
-      baseURL: this._config.asbBaseUrl,
+      baseURL: config.axios.asbBaseUrl,
       headers: {
-        Authorization: this._config.asbKeyUrl,
-        'content-type': 'application/zlib',
+        Authorization: config.axios.asbKeyUrl,
+        'content-type': 'application/json',
       },
-      transformRequest: [
-        (data: object) => {
-          return this.encryptData(this.compressData(data));
-        },
-      ],
       withCredentials: true,
       responseType: 'json',
       timeout: 1000,
     });
+    this._initializeResponseInterceptor();
   }
 
-  private compressData(data: object) {
-    return zlib.gzipSync(JSON.stringify(data));
-  }
+  private _initializeResponseInterceptor = () => {
+    this.instance.interceptors.response.use(this._handleResponse, this._handleError);
+  };
 
-  private encryptData(data: Buffer) {
-    return data.toString('base64');
-  }
+  private _handleResponse = (response: AxiosResponse) => response;
+
+  protected _handleError = (error: AxiosError) =>
+    Promise.reject(this._mapErrorMessage(error.response as AxiosErrorResponse));
+
+  protected _mapErrorMessage = (error: AxiosErrorResponse): MappedAxiosErrorResponse => {
+    return {
+      status: error.status,
+      statusText: error.statusText,
+      message: error.data.error,
+    };
+  };
 }

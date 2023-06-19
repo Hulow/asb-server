@@ -19,7 +19,7 @@ export const config: Config = {
     level: (process.env.LOG_LEVEL ?? LogLevel.Info) as LogLevel,
   },
   axios: {
-    asbBaseUrl: process.env.ASB_BASE_URL ?? 'http://localhost:3000/api',
+    asbBaseUrl: process.env.ASB_BASE_URL ?? 'http://localhost:3000',
     asbKeyUrl: process.env.ASB_KEY_URL ?? 'asb',
   },
   express: {
@@ -33,6 +33,9 @@ export const config: Config = {
     port: +(process.env.POSTGRES_DATABASE_PORT ?? 5432),
     username: process.env.POSTGRES_DATABASE_USER ?? 'docker',
     password: process.env.POSTGRES_DATABASE_PASSWORD ?? 'docker',
-    database: process.env.POSTGRES_DATABASE_NAME ?? 'asb',
+    database:
+      (process.env.NODE_ENV === 'test'
+        ? process.env.POSTGRES_DATABASE_TEST_NAME
+        : process.env.POSTGRES_DATABASE_NAME) ?? 'asb',
   },
 };

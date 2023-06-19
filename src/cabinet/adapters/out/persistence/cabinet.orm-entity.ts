@@ -42,9 +42,6 @@ export class CabinetTypeormEntity {
   @Column({ name: 'description', type: 'varchar' })
   description!: string;
 
-  @Column({ name: 'driver_id', type: 'integer' })
-  driverId!: number;
-
   @CreateDateColumn({ name: 'created_at', type: 'timestamp with time zone' })
   createdAt!: Date;
 
@@ -56,7 +53,7 @@ export class CabinetTypeormEntity {
 
   @ManyToOne(() => OwnerTypeormEntity, (owner) => owner.cabinets)
   @JoinColumn({ name: 'owner_uid' })
-  owner!: OwnerTypeormEntity;
+  owner?: OwnerTypeormEntity;
 
   @OneToOne(() => ImpulseTypeormEntity, (impulse) => impulse.cabinet)
   @JoinColumn({ name: 'impulse_uid' })
@@ -80,7 +77,6 @@ export class CabinetTypeormEntity {
       dimension: this.dimension,
       manufacturingYear: this.manufacturingYear,
       description: this.description,
-      driverId: this.driverId,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     });
