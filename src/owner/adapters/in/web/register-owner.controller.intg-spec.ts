@@ -19,6 +19,10 @@ describe(`/api/owner/register`, () => {
     await database.start();
   });
 
+  afterEach(async () => {
+    await database.clear();
+  });
+
   afterAll(async () => {
     await database.stop();
   });
@@ -52,7 +56,6 @@ describe(`/api/owner/register`, () => {
       uid: expect.stringMatching(UUID_V4_REGEX) as string,
       updatedAt: expect.any(Date) as Date,
     };
-    // then
     expect(await ownerRepository.getByOwnername(res.body.ownername)).toEqual(expectedResponse);
   });
 });

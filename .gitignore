@@ -3,4 +3,5 @@ dist
 tmp
 .env
 postgres
+postgres-test
 exports/measurements/inputs/*

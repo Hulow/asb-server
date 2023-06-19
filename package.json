@@ -10,7 +10,9 @@
     "_typeorm": "ts-node ./node_modules/.bin/typeorm -d ./ormconfig.js",
     "mig:create": "npm run _typeorm migration:create",
     "mig:run": "npm run _typeorm migration:run -d",
-    "mig:revert": "npm run _typeorm migration:revert"
+    "mig:revert": "npm run _typeorm migration:revert",
+    "mig:test:run": "NODE_ENV=test npm run _typeorm migration:run -d",
+    "mig:test:revert": "NODE_ENV=test npm run _typeorm migration:revert"
   },
   "dependencies": {
     "cors": "^2.8.5",
