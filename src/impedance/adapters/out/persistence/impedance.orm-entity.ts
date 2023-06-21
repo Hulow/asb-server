@@ -1,6 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 import { Impedance } from '../../../core/domain/impedance';
-import { CabinetTypeormEntity } from '../../../../cabinet/adapters/out/persistence/cabinet.orm-entity';
 
 @Entity({ name: 'impedance' })
 export class ImpedanceTypeormEntity {
@@ -66,10 +65,6 @@ export class ImpedanceTypeormEntity {
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt!: Date;
-
-  @OneToOne(() => CabinetTypeormEntity, (cabinet) => cabinet.impedance)
-  @JoinColumn()
-  cabinet!: CabinetTypeormEntity;
 
   toDomain(): Impedance {
     return new Impedance({

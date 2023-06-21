@@ -35,8 +35,8 @@ export class OwnerTypeormEntity {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt!: Date;
 
-  @OneToMany(() => CabinetTypeormEntity, (cabinet) => cabinet.owner)
-  cabinets?: CabinetTypeormEntity[];
+  @OneToMany(() => CabinetTypeormEntity, (cabinet) => cabinet.owner, { eager: true })
+  cabinets!: CabinetTypeormEntity[];
 
   toDomain(): Owner {
     return new Owner({
