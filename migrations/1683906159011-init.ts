@@ -12,11 +12,28 @@ export class init1683906159011 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "cabinet" ADD CONSTRAINT "FK_296304c6522d65c506b46fbfe4a" FOREIGN KEY ("owner_uid") REFERENCES "owner"("owner_uid") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
+
+    await queryRunner.query(
+      `CREATE TABLE "driver" ("driver_uid" uuid NOT NULL, CONSTRAINT "PK_2f25fae55a3bd80337501b310e3" PRIMARY KEY ("driver_uid"))`,
+    );
+    await queryRunner.query(
+      `CREATE TABLE "impedance" ("impedance_uid" uuid NOT NULL, CONSTRAINT "PK_197314cb3b86f25abee280469ff" PRIMARY KEY ("impedance_uid"))`,
+    );
+    await queryRunner.query(
+      `CREATE TABLE "frequency" ("frequency_uid" uuid NOT NULL, CONSTRAINT "PK_df955cae05f17b2bcf5045cc021" PRIMARY KEY ("frequency_uid"))`,
+    );
+    await queryRunner.query(
+      `CREATE TABLE "impulse" ("impulse_uid" uuid NOT NULL, CONSTRAINT "PK_defcb32ebd8a501832969358f0f" PRIMARY KEY ("impulse_uid"))`,
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`ALTER TABLE "cabinet" DROP CONSTRAINT "FK_296304c6522d65c506b46fbfe4a"`);
     await queryRunner.query(`DROP TABLE "owner"`);
     await queryRunner.query(`DROP TABLE "cabinet"`);
+    await queryRunner.query(`DROP TABLE "driver"`);
+    await queryRunner.query(`DROP TABLE "impedance"`);
+    await queryRunner.query(`DROP TABLE "frequency"`);
+    await queryRunner.query(`DROP TABLE "impulse"`);
   }
 }
