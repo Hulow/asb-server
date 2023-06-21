@@ -43,6 +43,13 @@ import {
 import { RegisterOwnerService } from './owner/core/application/services/register-owner.service';
 import { RegisterOwnerController } from './owner/adapters/in/web/register-owner.controller';
 
+import {
+  RegisterCabinetInputPort,
+  REGISTER_CABINET_INPUT_PORT,
+} from './cabinet/core/application/ports/in/register-cabinet.input-port';
+import { RegisterCabinetService } from './cabinet/core/application/services/register-cabinet.service';
+import { RegisterCabinetController } from './cabinet/adapters/in/web/register-cabinet.controller';
+
 export const container = new Container({
   autoBindInjectable: true,
   defaultScope: 'Singleton',
@@ -53,7 +60,7 @@ export const container = new Container({
  *  input/driving/primary adapters
  */
 container.bind(ExpressWebServer).toDynamicValue(() => {
-  const controllers = [container.get(RegisterOwnerController)];
+  const controllers = [container.get(RegisterOwnerController), container.get(RegisterCabinetController)];
   return new ExpressWebServer(config.express, container.get(LOGGER_OUTPUT_PORT), controllers);
 });
 
@@ -61,6 +68,7 @@ container.bind(ExpressWebServer).toDynamicValue(() => {
  *  application services
  */
 container.bind<RegisterOwnerInputPort>(REGISTER_OWNER_INPUT_PORT).to(RegisterOwnerService);
+container.bind<RegisterCabinetInputPort>(REGISTER_CABINET_INPUT_PORT).to(RegisterCabinetService);
 
 /**
  *  output/driven/secondary adapters
