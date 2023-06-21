@@ -1,7 +1,8 @@
 /* eslint-disable */
 import { RegisterOwnerPattern } from './owner/export-owner';
+import { RegisterCabinetPattern } from './cabinet/export-cabinet';
 
-export type RegisterEntityOptions = RegisterOwnerPattern;
+export type RegisterEntityOptions = RegisterOwnerPattern | RegisterCabinetPattern;
 
 export class ValidateInputJsonFile {
   constructor(private readonly data: object, private readonly registerEntityOptions: RegisterEntityOptions[]) {
@@ -38,6 +39,7 @@ export class ValidateInputJsonFile {
   }
 
   private validateValue(value: string | number): void {
-    if (typeof value !== 'string') throw new Error('Wrong value type is from input object');
+    if (typeof value !== 'string' && typeof value !== 'number')
+      throw new Error('Wrong value type is from input object');
   }
 }
