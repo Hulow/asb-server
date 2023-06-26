@@ -8,6 +8,7 @@ export interface CabinetProps {
   dimension: string;
   manufacturingYear: number;
   description: string;
+  ownerUid: string;
 }
 
 export class Cabinet extends DomainEntity {
@@ -18,6 +19,7 @@ export class Cabinet extends DomainEntity {
   readonly dimension: string;
   readonly manufacturingYear: number;
   readonly description: string;
+  readonly ownerUid: string;
 
   constructor(props: CabinetProps & EntityProps) {
     super(props);
@@ -29,5 +31,6 @@ export class Cabinet extends DomainEntity {
     this.dimension = props.dimension;
     this.manufacturingYear = props.manufacturingYear;
     this.description = props.description;
+    this.ownerUid = props.ownerUid;
   }
 }

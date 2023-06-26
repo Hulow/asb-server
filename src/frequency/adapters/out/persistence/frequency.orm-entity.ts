@@ -1,5 +1,4 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, JoinColumn, OneToOne } from 'typeorm';
-import { CabinetTypeormEntity } from '../../../../cabinet/adapters/out/persistence/cabinet.orm-entity';
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 
 import { Frequency } from '../../../core/domain/frequency';
 
@@ -46,10 +45,6 @@ export class FrequencyTypeormEntity {
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt!: Date;
-
-  @OneToOne(() => CabinetTypeormEntity, (cabinet) => cabinet.frequency)
-  @JoinColumn()
-  cabinet!: CabinetTypeormEntity;
 
   toDomain(): Frequency {
     return new Frequency({

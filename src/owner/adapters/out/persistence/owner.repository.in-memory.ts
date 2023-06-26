@@ -18,4 +18,11 @@ export class InMemoryOwnerRepository implements OwnerRepositoryOutputPort {
     const owner = new Owner({ ..._owner });
     return Promise.resolve(owner);
   }
+
+  async getById(ownerUid: string) {
+    const _owner = this.owners.find((owner) => owner.uid === ownerUid);
+    if (!_owner) return undefined;
+    const owner = new Owner({ ..._owner });
+    return Promise.resolve(owner);
+  }
 }

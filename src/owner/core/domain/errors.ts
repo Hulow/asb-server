@@ -5,3 +5,9 @@ export class OwnerAlreadyExists extends DomainError {
     super(`Owner ${ownername} already exists`);
   }
 }
+
+export class OwnerDoesNotExist extends DomainError {
+  constructor(ownerUid: string) {
+    super(`Owner ${ownerUid} does not exist`);
+  }
+}

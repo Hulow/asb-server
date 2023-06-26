@@ -1,5 +1,4 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, OneToOne } from 'typeorm';
-import { CabinetTypeormEntity } from '../../../../cabinet/adapters/out/persistence/cabinet.orm-entity';
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 import { Impulse } from '../../../core/domain/impulse';
 
 @Entity({ name: 'impulse' })
@@ -36,9 +35,6 @@ export class ImpulseTypeormEntity {
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt!: Date;
-
-  @OneToOne(() => CabinetTypeormEntity, (cabinet) => cabinet.impulse)
-  cabinet!: CabinetTypeormEntity;
 
   toDomain(): Impulse {
     return new Impulse({
