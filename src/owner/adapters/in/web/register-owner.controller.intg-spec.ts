@@ -38,7 +38,6 @@ describe(`/api/owner/register`, () => {
       description: 'description',
     };
 
-    // when
     const res: { body: { ownername: string } } = await request(expressApp)
       .post('/api/owner/register')
       .send(registerOwnerInput)

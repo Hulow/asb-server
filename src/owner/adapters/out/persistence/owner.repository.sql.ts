@@ -20,4 +20,10 @@ export class SqlOwnerRepository implements OwnerRepositoryOutputPort {
     if (!ownerEntity) return;
     return ownerEntity.toDomain();
   }
+
+  async getById(ownerUid: string) {
+    const ownerEntity = await this._repository.findOne({ where: { uid: ownerUid } });
+    if (!ownerEntity) return;
+    return ownerEntity;
+  }
 }

@@ -5,3 +5,6 @@ tmp
 postgres
 postgres-test
 exports/measurements/inputs/*
+exports/owner/inputs/*
+exports/cabinet/inputs/*
+exports/driver/inputs/*

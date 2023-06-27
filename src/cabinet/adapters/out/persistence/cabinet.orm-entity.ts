@@ -1,20 +1,6 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  OneToMany,
-  OneToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Cabinet } from '../../../core/domain/cabinet';
-import { DriverTypeormEntity } from '../../../../driver/adapters/out/persistence/driver.orm-entity';
 import { OwnerTypeormEntity } from '../../../../owner/adapters/out/persistence/owner.orm-entity';
-import { ImpulseTypeormEntity } from '../../../../impulse/adapters/out/persistence/impulse.orm-entity';
-import { FrequencyTypeormEntity } from '../../../../frequency/adapters/out/persistence/frequency.orm-entity';
-import { ImpedanceTypeormEntity } from '../../../../impedance/adapters/out/persistence/impedance.orm-entity';
 
 @Entity({ name: 'cabinet' })
 export class CabinetTypeormEntity {
@@ -48,24 +34,9 @@ export class CabinetTypeormEntity {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt!: Date;
 
-  @OneToMany(() => DriverTypeormEntity, (driver) => driver.cabinet, { eager: true })
-  drivers!: DriverTypeormEntity[];
-
   @ManyToOne(() => OwnerTypeormEntity, (owner) => owner.cabinets)
   @JoinColumn({ name: 'owner_uid' })
-  owner?: OwnerTypeormEntity;
-
-  @OneToOne(() => ImpulseTypeormEntity, (impulse) => impulse.cabinet)
-  @JoinColumn({ name: 'impulse_uid' })
-  impulse!: ImpulseTypeormEntity;
-
-  @OneToOne(() => FrequencyTypeormEntity, (frequency) => frequency.cabinet)
-  @JoinColumn({ name: 'frequency_uid' })
-  frequency!: FrequencyTypeormEntity;
-
-  @OneToOne(() => ImpedanceTypeormEntity, (impedance) => impedance.cabinet)
-  @JoinColumn({ name: 'impedance_uid' })
-  impedance!: ImpedanceTypeormEntity;
+  owner!: OwnerTypeormEntity;
 
   toDomain(): Cabinet {
     return new Cabinet({
@@ -77,13 +48,15 @@ export class CabinetTypeormEntity {
       dimension: this.dimension,
       manufacturingYear: this.manufacturingYear,
       description: this.description,
+      ownerUid: this.owner.uid,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     });
   }
 
-  static fromDomain(cabinet: Cabinet): CabinetTypeormEntity {
+  static fromDomain(cabinet: Cabinet, owner: OwnerTypeormEntity): CabinetTypeormEntity {
     const entity = new CabinetTypeormEntity();
+    entity.uid = cabinet.uid;
     entity.brandName = cabinet.brandName;
     entity.productName = cabinet.productName;
     entity.enclosureType = cabinet.enclosureType;
@@ -91,6 +64,7 @@ export class CabinetTypeormEntity {
     entity.dimension = cabinet.dimension;
     entity.manufacturingYear = cabinet.manufacturingYear;
     entity.description = cabinet.description;
+    entity.owner = owner;
     return entity;
   }
 }

@@ -36,7 +36,7 @@ describe('ValidateInputJsonFile', () => {
     const registerEntityOptions = [RegisterOwnerPattern.firstName, RegisterOwnerPattern.lastName];
     const data = {
       firstName: 'first-name',
-      lastName: 2,
+      lastName: new Date(),
     };
     const response = new ValidateInputJsonFile(data, registerEntityOptions).validateInput();
     await expect(response).rejects.toThrow('Wrong value type is from input object');
