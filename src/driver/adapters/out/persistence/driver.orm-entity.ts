@@ -48,13 +48,15 @@ export class DriverTypeormEntity {
       nominalDiameter: this.nominalDiameter,
       nominalImpedance: this.nominalImpedance,
       continuousPowerHandling: this.continuousPowerHandling,
+      cabinetUid: this.cabinet.uid,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     });
   }
 
-  static fromDomain(driver: Driver): DriverTypeormEntity {
+  static fromDomain(driver: Driver, cabinet: CabinetTypeormEntity): DriverTypeormEntity {
     const entity = new DriverTypeormEntity();
+    entity.uid = driver.uid;
     entity.brandName = driver.brandName;
     entity.productName = driver.driverType;
     entity.driverType = driver.driverType;
@@ -62,6 +64,7 @@ export class DriverTypeormEntity {
     entity.nominalDiameter = driver.nominalDiameter;
     entity.nominalImpedance = driver.nominalImpedance;
     entity.continuousPowerHandling = driver.continuousPowerHandling;
+    entity.cabinet = cabinet;
     return entity;
   }
 }

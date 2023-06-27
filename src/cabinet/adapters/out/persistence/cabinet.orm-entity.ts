@@ -1,6 +1,16 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryColumn,
+  UpdateDateColumn,
+  OneToMany,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Cabinet } from '../../../core/domain/cabinet';
 import { OwnerTypeormEntity } from '../../../../owner/adapters/out/persistence/owner.orm-entity';
+import { DriverTypeormEntity } from '../../../../driver/adapters/out/persistence/driver.orm-entity';
 
 @Entity({ name: 'cabinet' })
 export class CabinetTypeormEntity {
@@ -37,6 +47,9 @@ export class CabinetTypeormEntity {
   @ManyToOne(() => OwnerTypeormEntity, (owner) => owner.cabinets)
   @JoinColumn({ name: 'owner_uid' })
   owner!: OwnerTypeormEntity;
+
+  @OneToMany(() => DriverTypeormEntity, (driver) => driver.cabinet, { eager: true, cascade: true })
+  drivers!: DriverTypeormEntity[];
 
   toDomain(): Cabinet {
     return new Cabinet({

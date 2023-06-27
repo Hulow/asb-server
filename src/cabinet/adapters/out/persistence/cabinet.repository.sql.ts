@@ -17,6 +17,7 @@ export class SqlCabinetRepository implements CabinetRepositoryOutputPort {
     const entity = await this._repository.save(CabinetTypeormEntity.fromDomain(cabinet, ownerEntity));
     return entity.toDomain();
   }
+
   async getByProductNameAndOwnerUid(productName: string, ownerUid: string) {
     const cabinetEntity = await this._repository.findOne({
       relations: {
@@ -29,6 +30,12 @@ export class SqlCabinetRepository implements CabinetRepositoryOutputPort {
         },
       },
     });
+    if (!cabinetEntity) return;
+    return cabinetEntity.toDomain();
+  }
+
+  async getById(cabinetUid: string) {
+    const cabinetEntity = await this._repository.findOne({ where: { uid: cabinetUid } });
     if (!cabinetEntity) return;
     return cabinetEntity.toDomain();
   }

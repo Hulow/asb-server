@@ -8,6 +8,7 @@ export interface DriverProps {
   nominalDiameter: number;
   nominalImpedance: number;
   continuousPowerHandling: number;
+  cabinetUid: string;
 }
 
 export class Driver extends DomainEntity {
@@ -18,10 +19,10 @@ export class Driver extends DomainEntity {
   readonly nominalDiameter: number;
   readonly nominalImpedance: number;
   readonly continuousPowerHandling: number;
+  readonly cabinetUid: string;
 
   constructor(props: DriverProps & EntityProps) {
     super(props);
-
     this.brandName = props.brandName;
     this.productName = props.driverType;
     this.driverType = props.driverType;
@@ -29,5 +30,6 @@ export class Driver extends DomainEntity {
     this.nominalDiameter = props.nominalDiameter;
     this.nominalImpedance = props.nominalImpedance;
     this.continuousPowerHandling = props.continuousPowerHandling;
+    this.cabinetUid = props.cabinetUid;
   }
 }

@@ -19,4 +19,10 @@ export class InMemoryCabinetRepository implements CabinetRepositoryOutputPort {
     const cabinet = new Cabinet({ ..._cabinet });
     return Promise.resolve(cabinet);
   }
+  async getById(cabinetUid: string) {
+    const _cabinet = this.cabinets.find((cabinet) => cabinet.uid === cabinetUid);
+    if (!_cabinet) return undefined;
+    const cabinet = new Cabinet({ ..._cabinet });
+    return Promise.resolve(cabinet);
+  }
 }
