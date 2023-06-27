@@ -1,6 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+
 import { Driver } from '../../../core/domain/driver';
-import { CabinetTypeormEntity } from '../../../../cabinet/adapters/out/persistence/cabinet.orm-entity';
 
 @Entity({ name: 'driver' })
 export class DriverTypeormEntity {
@@ -28,15 +28,14 @@ export class DriverTypeormEntity {
   @Column({ name: 'continuous_power_handling', type: 'float' })
   continuousPowerHandling!: number;
 
+  @Column({ name: 'cabinet_uid', type: 'varchar' })
+  cabinetUid!: string;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamp with time zone' })
   createdAt!: Date;
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt!: Date;
-
-  @ManyToOne(() => CabinetTypeormEntity, (cabinet) => cabinet.drivers)
-  @JoinColumn({ name: 'cabinet_uid' })
-  cabinet!: CabinetTypeormEntity;
 
   toDomain(): Driver {
     return new Driver({
@@ -48,23 +47,23 @@ export class DriverTypeormEntity {
       nominalDiameter: this.nominalDiameter,
       nominalImpedance: this.nominalImpedance,
       continuousPowerHandling: this.continuousPowerHandling,
-      cabinetUid: this.cabinet.uid,
+      cabinetUid: this.cabinetUid,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     });
   }
 
-  static fromDomain(driver: Driver, cabinet: CabinetTypeormEntity): DriverTypeormEntity {
+  static fromDomain(driver: Driver): DriverTypeormEntity {
     const entity = new DriverTypeormEntity();
     entity.uid = driver.uid;
     entity.brandName = driver.brandName;
-    entity.productName = driver.driverType;
+    entity.productName = driver.productName;
     entity.driverType = driver.driverType;
     entity.manufacturingYear = driver.manufacturingYear;
     entity.nominalDiameter = driver.nominalDiameter;
     entity.nominalImpedance = driver.nominalImpedance;
     entity.continuousPowerHandling = driver.continuousPowerHandling;
-    entity.cabinet = cabinet;
+    entity.cabinetUid = driver.cabinetUid;
     return entity;
   }
 }

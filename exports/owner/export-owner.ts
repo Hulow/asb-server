@@ -42,8 +42,8 @@ export class ExportOwner {
 }
 const INPUTS_DIRECTORY = './inputs/owner.json';
 
-run().catch((err) => console.log(err));
-async function run() {
-  const resp = await new ExportOwner(INPUTS_DIRECTORY, registerOwnerPattern).registerOwner();
-  console.log(resp);
-}
+// run().catch((err) => console.log(err));
+// async function run() {
+//   const resp = await new ExportOwner(INPUTS_DIRECTORY, registerOwnerPattern).registerOwner();
+//   console.log(resp);
+// }

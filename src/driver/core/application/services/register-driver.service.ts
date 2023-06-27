@@ -30,7 +30,6 @@ export class RegisterDriverService implements RegisterDriverInputPort {
     if (!existingOwner) {
       throw new OwnerDoesNotExist(input.ownerUid);
     }
-    console.log('register driver service, about to get the existing cabinet');
     const existingCabinet = await this._cabinetRepository.getById(input.cabinetUid);
     if (!existingCabinet) {
       throw new CabinetDoesNotExist(input.cabinetUid);
@@ -39,6 +38,6 @@ export class RegisterDriverService implements RegisterDriverInputPort {
     if (existingDriver) {
       throw new DriverAlreadyExists(existingDriver.productName);
     }
-    return await this._driverRepository.save(driver, existingCabinet, existingOwner);
+    return await this._driverRepository.save(driver);
   }
 }

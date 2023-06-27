@@ -49,8 +49,8 @@ export class ExportDriver {
 }
 const INPUTS_DIRECTORY = './inputs/driver.json';
 
-run().catch((err) => console.log(err));
-async function run() {
-  const resp = await new ExportDriver(INPUTS_DIRECTORY, registerDriverPattern).registerDriver();
-  console.log(resp);
-}
+// run().catch((err) => console.log(err));
+// async function run() {
+//   const resp = await new ExportDriver(INPUTS_DIRECTORY, registerDriverPattern).registerDriver();
+//   console.log(resp);
+// }

@@ -1,5 +1,4 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, OneToMany } from 'typeorm';
-import { CabinetTypeormEntity } from '../../../../cabinet/adapters/out/persistence/cabinet.orm-entity';
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 
 import { Owner } from '../../../core/domain/owner';
 
@@ -34,9 +33,6 @@ export class OwnerTypeormEntity {
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt!: Date;
-
-  @OneToMany(() => CabinetTypeormEntity, (cabinet) => cabinet.owner, { eager: true })
-  cabinets!: CabinetTypeormEntity[];
 
   toDomain(): Owner {
     return new Owner({

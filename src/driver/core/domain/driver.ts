@@ -24,7 +24,7 @@ export class Driver extends DomainEntity {
   constructor(props: DriverProps & EntityProps) {
     super(props);
     this.brandName = props.brandName;
-    this.productName = props.driverType;
+    this.productName = props.productName;
     this.driverType = props.driverType;
     this.manufacturingYear = props.manufacturingYear;
     this.nominalDiameter = props.nominalDiameter;
