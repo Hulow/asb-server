@@ -32,3 +32,4 @@ export class SqlCabinetRepository implements CabinetRepositoryOutputPort {
     return cabinetEntity.toDomain();
   }
 }
+

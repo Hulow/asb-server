@@ -2,6 +2,7 @@
 import { RegisterOwnerPattern } from './owner/export-owner';
 import { RegisterDriverPattern } from './driver/export-driver';
 import { RegisterCabinetPattern } from './cabinet/export-cabinet';
+import { RegisterCabinetPattern } from './cabinet/export-cabinet';
 
 export type RegisterEntityOptions = RegisterOwnerPattern | RegisterCabinetPattern | RegisterDriverPattern;
 
