@@ -34,6 +34,6 @@ export class RegisterCabinetService implements RegisterCabinetInputPort {
     if (existingCabinet) {
       throw new CabinetAlreadyExists(existingCabinet.productName, input.ownerUid);
     }
-    return await this._cabinetRepository.save(cabinet, existingOwner);
+    return await this._cabinetRepository.save(cabinet);
   }
 }

@@ -1,8 +1,9 @@
 /* eslint-disable */
 import { RegisterOwnerPattern } from './owner/export-owner';
+import { RegisterDriverPattern } from './driver/export-driver';
 import { RegisterCabinetPattern } from './cabinet/export-cabinet';
 
-export type RegisterEntityOptions = RegisterOwnerPattern | RegisterCabinetPattern;
+export type RegisterEntityOptions = RegisterOwnerPattern | RegisterCabinetPattern | RegisterDriverPattern;
 
 export class ValidateInputJsonFile {
   constructor(private readonly data: object, private readonly registerEntityOptions: RegisterEntityOptions[]) {

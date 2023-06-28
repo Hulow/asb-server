@@ -1,7 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 import { Cabinet } from '../../../core/domain/cabinet';
-import { OwnerTypeormEntity } from '../../../../owner/adapters/out/persistence/owner.orm-entity';
-
 @Entity({ name: 'cabinet' })
 export class CabinetTypeormEntity {
   @PrimaryColumn({ name: 'cabinet_uid', type: 'uuid', update: false })
@@ -28,15 +26,14 @@ export class CabinetTypeormEntity {
   @Column({ name: 'description', type: 'varchar' })
   description!: string;
 
+  @Column({ name: 'owner_uid', type: 'varchar' })
+  ownerUid!: string;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamp with time zone' })
   createdAt!: Date;
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt!: Date;
-
-  @ManyToOne(() => OwnerTypeormEntity, (owner) => owner.cabinets)
-  @JoinColumn({ name: 'owner_uid' })
-  owner!: OwnerTypeormEntity;
 
   toDomain(): Cabinet {
     return new Cabinet({
@@ -48,13 +45,13 @@ export class CabinetTypeormEntity {
       dimension: this.dimension,
       manufacturingYear: this.manufacturingYear,
       description: this.description,
-      ownerUid: this.owner.uid,
+      ownerUid: this.ownerUid,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     });
   }
 
-  static fromDomain(cabinet: Cabinet, owner: OwnerTypeormEntity): CabinetTypeormEntity {
+  static fromDomain(cabinet: Cabinet): CabinetTypeormEntity {
     const entity = new CabinetTypeormEntity();
     entity.uid = cabinet.uid;
     entity.brandName = cabinet.brandName;
@@ -64,7 +61,7 @@ export class CabinetTypeormEntity {
     entity.dimension = cabinet.dimension;
     entity.manufacturingYear = cabinet.manufacturingYear;
     entity.description = cabinet.description;
-    entity.owner = owner;
+    entity.ownerUid = cabinet.ownerUid;
     return entity;
   }
 }

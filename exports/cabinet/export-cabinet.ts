@@ -46,8 +46,8 @@ export class ExportCabinet {
 }
 const INPUTS_DIRECTORY = './inputs/cabinet.json';
 
-run().catch((err) => console.log(err));
-async function run() {
-  const resp = await new ExportCabinet(INPUTS_DIRECTORY, registerCabinetPattern).registerCabinet();
-  console.log(resp);
-}
+// run().catch((err) => console.log(err));
+// async function run() {
+//   const resp = await new ExportCabinet(INPUTS_DIRECTORY, registerCabinetPattern).registerCabinet();
+//   console.log(resp);
+// }

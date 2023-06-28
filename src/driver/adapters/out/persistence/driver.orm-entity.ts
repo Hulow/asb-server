@@ -1,4 +1,5 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+
 import { Driver } from '../../../core/domain/driver';
 
 @Entity({ name: 'driver' })
@@ -27,6 +28,9 @@ export class DriverTypeormEntity {
   @Column({ name: 'continuous_power_handling', type: 'float' })
   continuousPowerHandling!: number;
 
+  @Column({ name: 'cabinet_uid', type: 'varchar' })
+  cabinetUid!: string;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamp with time zone' })
   createdAt!: Date;
 
@@ -43,6 +47,7 @@ export class DriverTypeormEntity {
       nominalDiameter: this.nominalDiameter,
       nominalImpedance: this.nominalImpedance,
       continuousPowerHandling: this.continuousPowerHandling,
+      cabinetUid: this.cabinetUid,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     });
@@ -50,13 +55,15 @@ export class DriverTypeormEntity {
 
   static fromDomain(driver: Driver): DriverTypeormEntity {
     const entity = new DriverTypeormEntity();
+    entity.uid = driver.uid;
     entity.brandName = driver.brandName;
-    entity.productName = driver.driverType;
+    entity.productName = driver.productName;
     entity.driverType = driver.driverType;
     entity.manufacturingYear = driver.manufacturingYear;
     entity.nominalDiameter = driver.nominalDiameter;
     entity.nominalImpedance = driver.nominalImpedance;
     entity.continuousPowerHandling = driver.continuousPowerHandling;
+    entity.cabinetUid = driver.cabinetUid;
     return entity;
   }
 }

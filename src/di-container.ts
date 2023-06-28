@@ -44,6 +44,12 @@ import { RegisterOwnerService } from './owner/core/application/services/register
 import { RegisterOwnerController } from './owner/adapters/in/web/register-owner.controller';
 
 import {
+  RegisterDriverInputPort,
+  REGISTER_DRIVER_INPUT_PORT,
+} from './driver/core/application/ports/in/register-driver.input-port';
+import { RegisterDriverService } from './driver/core/application/services/register-driver.service';
+import { RegisterDriverController } from './driver/adapters/in/web/register-driver.controller';
+import {
   RegisterCabinetInputPort,
   REGISTER_CABINET_INPUT_PORT,
 } from './cabinet/core/application/ports/in/register-cabinet.input-port';
@@ -60,7 +66,11 @@ export const container = new Container({
  *  input/driving/primary adapters
  */
 container.bind(ExpressWebServer).toDynamicValue(() => {
-  const controllers = [container.get(RegisterOwnerController), container.get(RegisterCabinetController)];
+  const controllers = [
+    container.get(RegisterOwnerController),
+    container.get(RegisterCabinetController),
+    container.get(RegisterDriverController),
+  ];
   return new ExpressWebServer(config.express, container.get(LOGGER_OUTPUT_PORT), controllers);
 });
 
@@ -69,6 +79,7 @@ container.bind(ExpressWebServer).toDynamicValue(() => {
  */
 container.bind<RegisterOwnerInputPort>(REGISTER_OWNER_INPUT_PORT).to(RegisterOwnerService);
 container.bind<RegisterCabinetInputPort>(REGISTER_CABINET_INPUT_PORT).to(RegisterCabinetService);
+container.bind<RegisterDriverInputPort>(REGISTER_DRIVER_INPUT_PORT).to(RegisterDriverService);
 
 /**
  *  output/driven/secondary adapters

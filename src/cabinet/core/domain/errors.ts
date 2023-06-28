@@ -5,3 +5,9 @@ export class CabinetAlreadyExists extends DomainError {
     super(`Cabinet ${productName} from ${ownerUid} already exists`);
   }
 }
+
+export class CabinetDoesNotExist extends DomainError {
+  constructor(cabinetUid: string) {
+    super(`Cabinet ${cabinetUid} does not exist`);
+  }
+}
