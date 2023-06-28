@@ -2,6 +2,7 @@ import { ValidateAndGetInputsDirectoryPath } from './validate-and-get-inputs-dir
 import { ValidateAndReadMeasurement } from './validate-and-read-measurement';
 import { FilesInputDirectory } from './validate-and-get-inputs-directory-path';
 import { MeasurementClient } from './measurement-http-client';
+import { RegisterFrequencyInput } from '../../src/frequency/core/application/ports/in/register-frequency.input-port';
 
 const INPUTS_DIRECTORY = 'inputs';
 
@@ -11,9 +12,18 @@ export enum InputFileName {
   ImpedanceResponse = 'impedance_response',
 }
 
+export enum MeasurementEndPoint {
+  frequency = '/api/frequency/register',
+  impulse = '/api/impulse/register',
+  Impedance = '/api/impedance/register',
+}
+
+export type RegisterMeasurementBody = RegisterFrequencyInput;
+
 // exportMeasurement(InputFileName.ImpedanceResponse).catch((err) => console.log(err));
 async function exportMeasurement(inputFileName: InputFileName) {
   let inputsDirectoryPath: FilesInputDirectory;
+  let measurement: RegisterMeasurementBody;
   try {
     switch (inputFileName) {
       case InputFileName.FrequencyResponse:
@@ -21,8 +31,8 @@ async function exportMeasurement(inputFileName: InputFileName) {
           INPUTS_DIRECTORY,
           InputFileName.FrequencyResponse,
         ).validateAndGetInputsDirectoryPath();
-        await new ValidateAndReadMeasurement(inputsDirectoryPath).validateAndReadMeasurement();
-        await new MeasurementClient().registerFrequency();
+        measurement = await new ValidateAndReadMeasurement(inputsDirectoryPath).validateAndReadMeasurement();
+        await new MeasurementClient().registerMeasurement(measurement, MeasurementEndPoint.frequency);
         break;
 
       case InputFileName.ImpedanceResponse:
@@ -30,8 +40,8 @@ async function exportMeasurement(inputFileName: InputFileName) {
           INPUTS_DIRECTORY,
           InputFileName.ImpedanceResponse,
         ).validateAndGetInputsDirectoryPath();
-        await new ValidateAndReadMeasurement(inputsDirectoryPath).validateAndReadMeasurement();
-        await new MeasurementClient().registerImpedance();
+        measurement = await new ValidateAndReadMeasurement(inputsDirectoryPath).validateAndReadMeasurement();
+        await new MeasurementClient().registerMeasurement(measurement, MeasurementEndPoint.Impedance);
         break;
 
       case InputFileName.ImpulseResponse:
@@ -39,8 +49,8 @@ async function exportMeasurement(inputFileName: InputFileName) {
           INPUTS_DIRECTORY,
           InputFileName.ImpulseResponse,
         ).validateAndGetInputsDirectoryPath();
-        await new ValidateAndReadMeasurement(inputsDirectoryPath).validateAndReadMeasurement();
-        await new MeasurementClient().registerImpulse();
+        measurement = await new ValidateAndReadMeasurement(inputsDirectoryPath).validateAndReadMeasurement();
+        await new MeasurementClient().registerMeasurement(measurement, MeasurementEndPoint.impulse);
         break;
     }
   } catch (error) {

@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { InputFileName } from '../export-measurement';
-import { ValidateAndReadMeasurement, MappedMeasurement } from '../validate-and-read-measurement';
+import { InputFileName, RegisterMeasurementBody } from '../export-measurement';
+import { ValidateAndReadMeasurement } from '../validate-and-read-measurement';
 import { FilesInputDirectory, FileExtension } from '../validate-and-get-inputs-directory-path';
 
 describe('ValidateAndReadMeasurement', () => {
@@ -75,7 +75,7 @@ describe('ValidateAndReadMeasurement', () => {
     };
 
     const response = new ValidateAndReadMeasurement(filesInputDirectory).validateAndReadMeasurement();
-    const mappedMeasurement: MappedMeasurement = {
+    const mappedMeasurement: RegisterMeasurementBody = {
       ownerUid: '1',
       cabinetUid: '2',
       driverUid: '2',
