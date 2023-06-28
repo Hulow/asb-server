@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { InputFileName } from '../export-measurements';
+import { InputFileName } from '../export-measurement';
 import { ValidateAndReadMeasurement, MappedMeasurement } from '../validate-and-read-measurement';
 import { FilesInputDirectory, FileExtension } from '../validate-and-get-inputs-directory-path';
 

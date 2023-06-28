@@ -6,7 +6,7 @@ import {
   FilesInputDirectory,
   FileExtension,
 } from '../validate-and-get-inputs-directory-path';
-import { InputFileName } from '../export-measurements';
+import { InputFileName } from '../export-measurement';
 
 describe('ValidateAndGetInputsDirectory', () => {
   let INPUT_DIRECTORY: string;

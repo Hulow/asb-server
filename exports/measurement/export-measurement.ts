@@ -17,7 +17,6 @@ async function exportMeasurement() {
       InputFileName.ImpedanceResponse,
     ).validateAndGetInputsDirectoryPath();
     await new ValidateAndReadMeasurement(inputsDirectoryPath).validateAndReadMeasurement();
-
   } catch (error) {
     console.log(error);
   }

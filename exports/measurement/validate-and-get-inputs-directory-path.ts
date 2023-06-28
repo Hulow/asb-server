@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { InputFileName } from './export-measurements';
+import { InputFileName } from './export-measurement';
 
 export enum FileExtension {
   txt = '.txt',
