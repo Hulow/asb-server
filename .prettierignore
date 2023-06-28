@@ -3,5 +3,4 @@ dist
 temp
 .env
 exports/measurement/inputs/*
-exports/measurement/export-measurement.ts
 .eslintignore
