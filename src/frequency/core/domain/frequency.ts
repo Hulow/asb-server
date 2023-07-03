@@ -2,7 +2,7 @@ import { DomainEntity, EntityProps } from '../../../shared/domain/entity';
 
 export interface FrequencyProps {
   measuredBy: string;
-  measuredFrom: string;
+  source: string;
   sweepLength: string;
   measuredAt: Date;
   frequencyWeightings: string;
@@ -10,11 +10,12 @@ export interface FrequencyProps {
   note: string;
   smoothing: string;
   measurements: object;
+  cabinetUid: string;
 }
 
 export class Frequency extends DomainEntity {
   readonly measuredBy: string;
-  readonly measuredFrom: string;
+  readonly source: string;
   readonly sweepLength: string;
   readonly measuredAt: Date;
   readonly frequencyWeightings: string;
@@ -22,12 +23,13 @@ export class Frequency extends DomainEntity {
   readonly note: string;
   readonly smoothing: string;
   readonly measurements: object;
+  readonly cabinetUid: string;
 
   constructor(props: FrequencyProps & EntityProps) {
     super(props);
 
     this.measuredBy = props.measuredBy;
-    this.measuredFrom = props.measuredFrom;
+    this.source = props.source;
     this.sweepLength = props.sweepLength;
     this.measuredAt = props.measuredAt;
     this.frequencyWeightings = props.frequencyWeightings;
@@ -35,5 +37,6 @@ export class Frequency extends DomainEntity {
     this.note = props.note;
     this.smoothing = props.smoothing;
     this.measurements = props.measurements;
+    this.cabinetUid = props.cabinetUid;
   }
 }

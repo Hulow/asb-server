@@ -17,7 +17,7 @@ export class RegisterFrequencyService implements RegisterFrequencyInputPort {
     console.log(input);
     const frequency = new Frequency({
       measuredBy: 'string',
-      measuredFrom: 'string',
+      source: 'string',
       sweepLength: 'string',
       measuredAt: new Date(),
       frequencyWeightings: 'string',
@@ -25,6 +25,7 @@ export class RegisterFrequencyService implements RegisterFrequencyInputPort {
       note: 'string',
       smoothing: 'string',
       measurements: {},
+      cabinetUid: 'a174f23b-7c9f-4102-b0b6-201746d48198',
     });
     return await this.frequencyRepository.save(frequency);
   }
