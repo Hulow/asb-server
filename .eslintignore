@@ -6,7 +6,7 @@ tmp
 postgres
 jest.config.ts
 ormconfig.js
-exports/measurements/export-measurements.ts
+exports/measurement/export-measurement.ts
 exports/owner/export-owner.ts
 exports/cabinet/export-cabinet.ts
 exports/driver/export-driver.ts

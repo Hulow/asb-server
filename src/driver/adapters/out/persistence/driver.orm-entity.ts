@@ -28,7 +28,7 @@ export class DriverTypeormEntity {
   @Column({ name: 'continuous_power_handling', type: 'float' })
   continuousPowerHandling!: number;
 
-  @Column({ name: 'cabinet_uid', type: 'varchar' })
+  @Column({ name: 'cabinet_uid', type: 'uuid' })
   cabinetUid!: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp with time zone' })

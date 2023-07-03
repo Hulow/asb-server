@@ -2,6 +2,7 @@
 
 import * as fs from 'fs';
 import { FilesInputDirectory } from './validate-and-get-inputs-directory-path';
+import { RegisterMeasurementBody } from './export-measurement';
 
 interface Measurement {
   metadata: MeasurementMetadata;
@@ -14,19 +15,12 @@ interface MeasurementMetadata {
   driverUid: string;
 }
 
-export interface MappedMeasurement {
-  ownerUid: string;
-  cabinetUid: string;
-  driverUid: string;
-  measurements: string;
-}
-
 export class ValidateAndReadMeasurement {
   constructor(private readonly inputsDirectoryPath: FilesInputDirectory) {
     this.inputsDirectoryPath = inputsDirectoryPath;
   }
 
-  async validateAndReadMeasurement(): Promise<MappedMeasurement> {
+  async validateAndReadMeasurement(): Promise<RegisterMeasurementBody> {
     const filesPath: string[] = [this.inputsDirectoryPath.jsonFilePath, this.inputsDirectoryPath.txtFilePath];
     this.validateFiles(filesPath);
     const measurement: Measurement = this.readFiles(filesPath);
@@ -53,7 +47,7 @@ export class ValidateAndReadMeasurement {
     return fs.readFileSync(filePath, 'utf8');
   }
 
-  private mapMeasurements(measurements: Measurement): MappedMeasurement {
+  private mapMeasurements(measurements: Measurement): RegisterMeasurementBody {
     const { metadata, data } = measurements;
     return {
       ownerUid: this.validateValue('ownerUid', metadata.ownerUid),

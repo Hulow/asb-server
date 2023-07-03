@@ -26,7 +26,7 @@ export class CabinetTypeormEntity {
   @Column({ name: 'description', type: 'varchar' })
   description!: string;
 
-  @Column({ name: 'owner_uid', type: 'varchar' })
+  @Column({ name: 'owner_uid', type: 'uuid' })
   ownerUid!: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp with time zone' })

@@ -4,14 +4,14 @@ import { Frequency } from '../../../core/domain/frequency';
 
 @Entity({ name: 'frequency' })
 export class FrequencyTypeormEntity {
-  @PrimaryColumn({ name: 'driver_uid', type: 'uuid', update: false })
+  @PrimaryColumn({ name: 'frequency_uid', type: 'uuid', update: false })
   uid!: string;
 
   @Column({ name: 'measured_by', type: 'varchar' })
   measuredBy!: string;
 
-  @Column({ name: 'measured_from', type: 'varchar' })
-  measuredFrom!: string;
+  @Column({ name: 'source', type: 'varchar' })
+  source!: string;
 
   @Column({ name: 'sweep_length', type: 'varchar' })
   sweepLength!: string;
@@ -34,11 +34,8 @@ export class FrequencyTypeormEntity {
   @Column({ name: 'measurements', type: 'jsonb' })
   measurements!: object;
 
-  @Column({ name: 'driver_id', type: 'float' })
-  driverId!: number;
-
-  @Column({ name: 'cabinet_id', type: 'float' })
-  cabinetId!: number;
+  @Column({ name: 'cabinet_uid', type: 'uuid' })
+  cabinetUid!: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp with time zone' })
   createdAt!: Date;
@@ -50,7 +47,7 @@ export class FrequencyTypeormEntity {
     return new Frequency({
       uid: this.uid,
       measuredBy: this.measuredBy,
-      measuredFrom: this.measuredFrom,
+      source: this.source,
       sweepLength: this.sweepLength,
       measuredAt: this.measuredAt,
       frequencyWeightings: this.frequencyWeightings,
@@ -58,6 +55,7 @@ export class FrequencyTypeormEntity {
       note: this.note,
       smoothing: this.smoothing,
       measurements: this.measurements,
+      cabinetUid: this.cabinetUid,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     });
@@ -65,8 +63,9 @@ export class FrequencyTypeormEntity {
 
   static fromDomain(frequency: Frequency): FrequencyTypeormEntity {
     const entity = new FrequencyTypeormEntity();
+    entity.uid = frequency.uid;
     entity.measuredBy = frequency.measuredBy;
-    entity.measuredFrom = frequency.measuredFrom;
+    entity.source = frequency.source;
     entity.sweepLength = frequency.sweepLength;
     entity.measuredAt = frequency.measuredAt;
     entity.frequencyWeightings = frequency.frequencyWeightings;
@@ -74,6 +73,7 @@ export class FrequencyTypeormEntity {
     entity.note = frequency.note;
     entity.smoothing = frequency.smoothing;
     entity.measurements = frequency.measurements;
+    entity.cabinetUid = frequency.cabinetUid;
 
     return entity;
   }

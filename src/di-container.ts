@@ -56,6 +56,13 @@ import {
 import { RegisterCabinetService } from './cabinet/core/application/services/register-cabinet.service';
 import { RegisterCabinetController } from './cabinet/adapters/in/web/register-cabinet.controller';
 
+import {
+  RegisterFrequencyInputPort,
+  REGISTER_FREQUENCY_INPUT_PORT,
+} from './frequency/core/application/ports/in/register-frequency.input-port';
+import { RegisterFrequencyService } from './frequency/core/application/services/register-frequency.service';
+import { RegisterFrequencyController } from './frequency/adapters/in/web/register-frequency.controller';
+
 export const container = new Container({
   autoBindInjectable: true,
   defaultScope: 'Singleton',
@@ -70,6 +77,7 @@ container.bind(ExpressWebServer).toDynamicValue(() => {
     container.get(RegisterOwnerController),
     container.get(RegisterCabinetController),
     container.get(RegisterDriverController),
+    container.get(RegisterFrequencyController),
   ];
   return new ExpressWebServer(config.express, container.get(LOGGER_OUTPUT_PORT), controllers);
 });
@@ -80,6 +88,7 @@ container.bind(ExpressWebServer).toDynamicValue(() => {
 container.bind<RegisterOwnerInputPort>(REGISTER_OWNER_INPUT_PORT).to(RegisterOwnerService);
 container.bind<RegisterCabinetInputPort>(REGISTER_CABINET_INPUT_PORT).to(RegisterCabinetService);
 container.bind<RegisterDriverInputPort>(REGISTER_DRIVER_INPUT_PORT).to(RegisterDriverService);
+container.bind<RegisterFrequencyInputPort>(REGISTER_FREQUENCY_INPUT_PORT).to(RegisterFrequencyService);
 
 /**
  *  output/driven/secondary adapters
