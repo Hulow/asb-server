@@ -14,7 +14,7 @@ export class RegisterImpedanceService implements RegisterImpedanceInputPort {
   ) {}
 
   async handler(input: RegisterImpedanceInput): Promise<Impedance> {
-    // console.log(input);
+    console.log(input);
     const impedance = new Impedance({
       pistonDiameter: 1,
       resonanceFrequency: 1,
@@ -35,6 +35,7 @@ export class RegisterImpedanceService implements RegisterImpedanceInputPort {
       kI: 1,
       xI: 1,
     });
+    await this.impedanceRepository.save(impedance);
     return impedance;
   }
 }
