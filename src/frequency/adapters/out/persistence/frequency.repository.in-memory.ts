@@ -11,4 +11,11 @@ export class InMemoryFrequencyRepository implements FrequencyRepositoryOutputPor
     this.frequencies.push(new Frequency({ ...frequency }));
     return Promise.resolve(frequency);
   }
+
+  async getByCabinetUid(cabinetUid: string) {
+    const _frequency = this.frequencies.find((frequency) => frequency.cabinetUid === cabinetUid);
+    if (!_frequency) return undefined;
+    const frequency = new Frequency({ ..._frequency });
+    return Promise.resolve(frequency);
+  }
 }
