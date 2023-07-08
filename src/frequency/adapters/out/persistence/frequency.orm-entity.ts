@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 
-import { Frequency } from '../../../core/domain/frequency';
+import { Frequency, FrequencyResponse } from '../../../core/domain/frequency';
 
 @Entity({ name: 'frequency' })
 export class FrequencyTypeormEntity {
@@ -16,14 +16,14 @@ export class FrequencyTypeormEntity {
   @Column({ name: 'sweep_length', type: 'varchar' })
   sweepLength!: string;
 
-  @Column({ name: 'measured_at', type: 'timestamp with time zone' })
-  measuredAt!: Date;
+  @Column({ name: 'measured_at', type: 'varchar' })
+  measuredAt!: string;
 
   @Column({ name: 'frequency_weightings', type: 'varchar' })
   frequencyWeightings!: string;
 
-  @Column({ name: 'target_level', type: 'float' })
-  targetLevel!: number;
+  @Column({ name: 'target_level', type: 'varchar' })
+  targetLevel!: string;
 
   @Column({ name: 'note', type: 'varchar' })
   note!: string;
@@ -32,7 +32,7 @@ export class FrequencyTypeormEntity {
   smoothing!: string;
 
   @Column({ name: 'measurements', type: 'jsonb' })
-  measurements!: object;
+  measurements!: FrequencyResponse[];
 
   @Column({ name: 'cabinet_uid', type: 'uuid' })
   cabinetUid!: string;

@@ -4,25 +4,30 @@ export interface FrequencyProps {
   measuredBy: string;
   source: string;
   sweepLength: string;
-  measuredAt: Date;
+  measuredAt: string;
   frequencyWeightings: string;
-  targetLevel: number;
+  targetLevel: string;
   note: string;
   smoothing: string;
-  measurements: object;
+  measurements: FrequencyResponse[];
   cabinetUid: string;
+}
+export interface FrequencyResponse {
+  frequency: number;
+  spl: number;
+  phase: number;
 }
 
 export class Frequency extends DomainEntity {
   readonly measuredBy: string;
   readonly source: string;
   readonly sweepLength: string;
-  readonly measuredAt: Date;
+  readonly measuredAt: string;
   readonly frequencyWeightings: string;
-  readonly targetLevel: number;
+  readonly targetLevel: string;
   readonly note: string;
   readonly smoothing: string;
-  readonly measurements: object;
+  readonly measurements: FrequencyResponse[];
   readonly cabinetUid: string;
 
   constructor(props: FrequencyProps & EntityProps) {
