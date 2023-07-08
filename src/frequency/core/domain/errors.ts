@@ -5,3 +5,9 @@ export class FrequencyAlreadyExists extends DomainError {
     super(`Frequency from cabinet ${cabinetUid} already exists`);
   }
 }
+
+export class FrequencyParameterNotFound extends DomainError {
+  constructor(parameter: string) {
+    super(`${parameter} parameter from Frequency not found`);
+  }
+}
