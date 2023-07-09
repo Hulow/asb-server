@@ -11,7 +11,7 @@
 
 ## Overview
 
-- This application use the Inversion of Control design pattern provided by the InversifyJS container.
+- This application use the Inversion of Control principle provided by the InversifyJS container.
 - This application follows the Hexagonal Architecture pattern introduced by Alistair Cockburn in 2005, segregating the application & adapter throught different ports.
 - This application is decoupled throught 7 different entities:
   - Owner
