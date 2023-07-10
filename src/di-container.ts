@@ -63,6 +63,13 @@ import {
 import { RegisterFrequencyService } from './frequency/core/application/services/register-frequency.service';
 import { RegisterFrequencyController } from './frequency/adapters/in/web/register-frequency.controller';
 
+import {
+  RegisterImpulseInputPort,
+  REGISTER_IMPULSE_INPUT_PORT,
+} from './impulse/core/application/ports/in/register-impulse.input-port';
+import { RegisterImpulseService } from './impulse/core/application/services/register-impulse.service';
+import { RegisterImpulseController } from './impulse/adapters/in/web/register-impulse.controller';
+
 export const container = new Container({
   autoBindInjectable: true,
   defaultScope: 'Singleton',
@@ -78,6 +85,7 @@ container.bind(ExpressWebServer).toDynamicValue(() => {
     container.get(RegisterCabinetController),
     container.get(RegisterDriverController),
     container.get(RegisterFrequencyController),
+    container.get(RegisterImpulseController),
   ];
   return new ExpressWebServer(config.express, container.get(LOGGER_OUTPUT_PORT), controllers);
 });
@@ -89,6 +97,7 @@ container.bind<RegisterOwnerInputPort>(REGISTER_OWNER_INPUT_PORT).to(RegisterOwn
 container.bind<RegisterCabinetInputPort>(REGISTER_CABINET_INPUT_PORT).to(RegisterCabinetService);
 container.bind<RegisterDriverInputPort>(REGISTER_DRIVER_INPUT_PORT).to(RegisterDriverService);
 container.bind<RegisterFrequencyInputPort>(REGISTER_FREQUENCY_INPUT_PORT).to(RegisterFrequencyService);
+container.bind<RegisterImpulseInputPort>(REGISTER_IMPULSE_INPUT_PORT).to(RegisterImpulseService);
 
 /**
  *  output/driven/secondary adapters
@@ -101,6 +110,5 @@ container.bind<CabinetRepositoryOutputPort>(CABINET_REPOSITORY_OUTPUT_PORT).to(S
 container.bind<DriverRepositoryOutputPort>(DRIVER_REPOSITORY_OUTPUT_PORT).to(SqlDriverRepository);
 container.bind<FrequencyRepositoryOutputPort>(FREQUENCY_REPOSITORY_OUTPUT_PORT).to(SqlFrequencyRepository);
 container.bind<ImpulseRepositoryOutputPort>(IMPULSE_REPOSITORY_OUTPUT_PORT).to(SqlImpulseRepository);
-
 container.bind<OwnerRepositoryOutputPort>(OWNER_REPOSITORY_OUTPUT_PORT).to(SqlOwnerRepository);
 container.bind<ImpedanceRepositoryOutputPort>(IMPEDANCE_REPOSITORY_OUTPUT_PORT).to(SqlImpedanceRepository);
