@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
-import { Impulse } from '../../../core/domain/impulse';
+import { Impulse, ImpulseResponse } from '../../../core/domain/impulse';
 
 @Entity({ name: 'impulse' })
 export class ImpulseTypeormEntity {
@@ -15,8 +15,8 @@ export class ImpulseTypeormEntity {
   @Column({ name: 'source', type: 'varchar' })
   source!: string;
 
-  @Column({ name: 'measured_at', type: 'timestamp with time zone' })
-  measuredAt!: Date;
+  @Column({ name: 'measured_at', type: 'varchar' })
+  measuredAt!: string;
 
   @Column({ name: 'sweep_length', type: 'varchar' })
   sweepLength!: string;
@@ -28,7 +28,10 @@ export class ImpulseTypeormEntity {
   sampleInterval!: string;
 
   @Column({ name: 'measurements', type: 'jsonb' })
-  measurements!: object;
+  measurements!: ImpulseResponse[];
+
+  @Column({ name: 'cabinet_uid', type: 'uuid' })
+  cabinetUid!: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp with time zone' })
   createdAt!: Date;
@@ -47,22 +50,24 @@ export class ImpulseTypeormEntity {
       responseWindow: this.responseWindow,
       sampleInterval: this.sampleInterval,
       measurements: this.measurements,
+      cabinetUid: this.cabinetUid,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     });
   }
 
-  static fromDomain(frequency: Impulse): ImpulseTypeormEntity {
+  static fromDomain(impulse: Impulse): ImpulseTypeormEntity {
     const entity = new ImpulseTypeormEntity();
-    entity.measuredBy = frequency.measuredBy;
-    entity.note = frequency.note;
-    entity.source = frequency.source;
-    entity.measuredAt = frequency.measuredAt;
-    entity.sweepLength = frequency.sweepLength;
-    entity.responseWindow = frequency.responseWindow;
-    entity.sampleInterval = frequency.sampleInterval;
-    entity.measurements = frequency.measurements;
-
+    entity.uid = impulse.uid;
+    entity.measuredBy = impulse.measuredBy;
+    entity.note = impulse.note;
+    entity.source = impulse.source;
+    entity.measuredAt = impulse.measuredAt;
+    entity.sweepLength = impulse.sweepLength;
+    entity.responseWindow = impulse.responseWindow;
+    entity.sampleInterval = impulse.sampleInterval;
+    entity.measurements = impulse.measurements;
+    entity.cabinetUid = impulse.cabinetUid;
     return entity;
   }
 }
