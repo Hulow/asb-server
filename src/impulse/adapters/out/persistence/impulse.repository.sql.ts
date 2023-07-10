@@ -14,4 +14,10 @@ export class SqlImpulseRepository implements ImpulseRepositoryOutputPort {
     const entity = await this._repository.save(ImpulseTypeormEntity.fromDomain(impulse));
     return entity.toDomain();
   }
+
+  async getByCabinetUid(cabinetUid: string) {
+    const impulseEntity = await this._repository.findOne({ where: { cabinetUid } });
+    if (!impulseEntity) return;
+    return impulseEntity.toDomain();
+  }
 }
