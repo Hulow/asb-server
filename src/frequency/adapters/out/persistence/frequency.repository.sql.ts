@@ -14,4 +14,10 @@ export class SqlFrequencyRepository implements FrequencyRepositoryOutputPort {
     const entity = await this._repository.save(FrequencyTypeormEntity.fromDomain(frequency));
     return entity.toDomain();
   }
+
+  async getByCabinetUid(cabinetUid: string) {
+    const frequencyEntity = await this._repository.findOne({ where: { cabinetUid } });
+    if (!frequencyEntity) return;
+    return frequencyEntity.toDomain();
+  }
 }

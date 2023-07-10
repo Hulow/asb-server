@@ -1,0 +1,15 @@
+* Measurement data measured by REW V5.20.13
+* Source: Scarlett 2i2 USB, MICROPHONE, L, volume: no control
+* Format: 512k Log Swept Sine, 2 sweeps at -12.0 dBFS with no timing reference
+* Dated: Mar 22, 2023 2:53:43 PM
+* REW Settings:
+*  C-weighting compensation: Off
+*  Target level: 75.0 dB
+* Note: second measurement Mic is at 1m and almost align with tweeter
+* Measurement: first_measurement Mar 22
+* Smoothing: 1/3 octave
+* Frequency Step: 0.3364563 Hz
+* Start Frequency: 15.140533 Hz
+*
+* Freq(Hz) SPL(dB) Phase(degrees)
+15.140533 44.493 86.8478

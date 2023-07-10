@@ -8,7 +8,8 @@ import {
   REGISTER_FREQUENCY_INPUT_PORT,
   RegisterFrequencyInput,
 } from '../../../core/application/ports/in/register-frequency.input-port';
-import { FrequencyAlreadyExists } from '../../../core/domain/errors';
+import { FrequencyAlreadyExists, FrequencyParameterNotFound } from '../../../core/domain/errors';
+import { CabinetDoesNotExist } from '../../../../cabinet/core/domain/errors';
 
 @injectable()
 export class RegisterFrequencyController implements ExpressController {
@@ -30,7 +31,8 @@ export class RegisterFrequencyController implements ExpressController {
       res.json(response);
     } catch (error) {
       if (error instanceof FrequencyAlreadyExists) throw new httpErrors.NotFound(error.message);
-      throw error;
+      if (error instanceof FrequencyParameterNotFound) throw new httpErrors.NotFound(error.message);
+      if (error instanceof CabinetDoesNotExist) throw new httpErrors.NotFound(error.message);
     }
   }
 }
