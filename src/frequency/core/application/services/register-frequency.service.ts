@@ -15,7 +15,7 @@ import { CabinetDoesNotExist } from '../../../../cabinet/core/domain/errors';
 
 const PATTERN = '*\n';
 
-const FrequencyparameterPatterns = {
+const frequencyParameterPatterns = {
   measuredBy: /(?<=measured by ).*/,
   source: /(?<=Source: ).*USB/,
   sweepLength: /(?<=Format: ).*Sine/,
@@ -41,17 +41,17 @@ interface ParametersAndPattern {
   pattern: RegExp;
 }
 const PARAMETERS_AND_PATTERNS: ParametersAndPattern[] = [
-  { name: FrequencyParametersName.MeasuredBy, pattern: FrequencyparameterPatterns.measuredBy },
-  { name: FrequencyParametersName.Source, pattern: FrequencyparameterPatterns.source },
-  { name: FrequencyParametersName.SweepLength, pattern: FrequencyparameterPatterns.sweepLength },
-  { name: FrequencyParametersName.MeasuredAt, pattern: FrequencyparameterPatterns.measuredAt },
+  { name: FrequencyParametersName.MeasuredBy, pattern: frequencyParameterPatterns.measuredBy },
+  { name: FrequencyParametersName.Source, pattern: frequencyParameterPatterns.source },
+  { name: FrequencyParametersName.SweepLength, pattern: frequencyParameterPatterns.sweepLength },
+  { name: FrequencyParametersName.MeasuredAt, pattern: frequencyParameterPatterns.measuredAt },
   {
     name: FrequencyParametersName.FrequencyWeightings,
-    pattern: FrequencyparameterPatterns.frequencyWeightings,
+    pattern: frequencyParameterPatterns.frequencyWeightings,
   },
-  { name: FrequencyParametersName.TargetLevel, pattern: FrequencyparameterPatterns.targetLevel },
-  { name: FrequencyParametersName.Note, pattern: FrequencyparameterPatterns.note },
-  { name: FrequencyParametersName.Smoothing, pattern: FrequencyparameterPatterns.smoothing },
+  { name: FrequencyParametersName.TargetLevel, pattern: frequencyParameterPatterns.targetLevel },
+  { name: FrequencyParametersName.Note, pattern: frequencyParameterPatterns.note },
+  { name: FrequencyParametersName.Smoothing, pattern: frequencyParameterPatterns.smoothing },
 ];
 @injectable()
 export class RegisterFrequencyService implements RegisterFrequencyInputPort {
@@ -77,9 +77,9 @@ export class RegisterFrequencyService implements RegisterFrequencyInputPort {
     const { measurements } = input;
     const parametersAndMeasurements = measurements.split(PATTERN);
     const parameters = parametersAndMeasurements[0].split('\n');
+    const mappedParameters: FrequencyProps = this.mapParameters(parameters);
     const measurementData = parametersAndMeasurements[1].split('\n');
     measurementData.shift();
-    const mappedParameters: FrequencyProps = this.mapParameters(parameters);
     const frequencyResponse: FrequencyResponse[] = this.mapFrequencyResponse(measurementData);
     return this.mapFrequencyObject(input.cabinetUid, mappedParameters, frequencyResponse);
   }
