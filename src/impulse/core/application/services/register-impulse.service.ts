@@ -197,8 +197,8 @@ export class RegisterImpulseService implements RegisterImpulseInputPort {
   }
 
   private verifyResponseLength(newImpulse: ImpulseProps) {
-    if (newImpulse.measurements.length - 1 !== Number(newImpulse.responseLength)) {
-      throw new MissingImpulseGraphDataFound(newImpulse.responseLength, newImpulse.measurements.length - 1);
+    if (newImpulse.measurements.length !== Number(newImpulse.responseLength)) {
+      throw new MissingImpulseGraphDataFound(newImpulse.responseLength, newImpulse.measurements.length);
     }
   }
 }

@@ -1,0 +1,20 @@
+* Impulse Response data saved by REW V5.20.13
+* Note: impulse_response
+* IR is normalised
+* IR window has been applied
+* IR is not the min phase version
+* Source: Scarlett 2i2 USB, MICROPHONE, L, volume: no control
+* Dated: Mar 22, 2023 2:53:43 PM
+* Measurement: first_measurement Mar 22
+* Excitation: 512k Log Swept Sine, 2 sweeps at -12.0 dBFS with no timing reference
+* Response measured over: 15.1 to 20,000.0 Hz
+0.1058686152100563 // Peak value before normalisation
+5513 // Peak index
+10 // Response length
+2.2675736961451248E-5 // Sample interval (seconds)
+-0.12501133786848073 // Start time (seconds)
+* Data start
+0.0
+1.1946093E-11
+4.6445597E-11
+1.6116244E-10
