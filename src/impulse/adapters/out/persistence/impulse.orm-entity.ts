@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
-import { Impulse, ImpulseResponse } from '../../../core/domain/impulse';
+import { Impulse, ImpulseGraph } from '../../../core/domain/impulse';
 
 @Entity({ name: 'impulse' })
 export class ImpulseTypeormEntity {
@@ -24,11 +24,23 @@ export class ImpulseTypeormEntity {
   @Column({ name: 'response_window', type: 'varchar' })
   responseWindow!: string;
 
+  @Column({ name: 'measurements', type: 'jsonb' })
+  measurements!: ImpulseGraph[];
+
+  @Column({ name: 'peak_value_before_initialization', type: 'varchar' })
+  peakValueBeforeInitialization!: string;
+
+  @Column({ name: 'peak_index', type: 'varchar' })
+  peakIndex!: string;
+
+  @Column({ name: 'response_length', type: 'varchar' })
+  responseLength!: string;
+
   @Column({ name: 'sample_interval', type: 'varchar' })
   sampleInterval!: string;
 
-  @Column({ name: 'measurements', type: 'jsonb' })
-  measurements!: ImpulseResponse[];
+  @Column({ name: 'start_time', type: 'varchar' })
+  startTime!: string;
 
   @Column({ name: 'cabinet_uid', type: 'uuid' })
   cabinetUid!: string;
@@ -48,8 +60,12 @@ export class ImpulseTypeormEntity {
       measuredAt: this.measuredAt,
       sweepLength: this.sweepLength,
       responseWindow: this.responseWindow,
-      sampleInterval: this.sampleInterval,
       measurements: this.measurements,
+      peakValueBeforeInitialization: this.peakValueBeforeInitialization,
+      peakIndex: this.peakIndex,
+      responseLength: this.responseLength,
+      sampleInterval: this.sampleInterval,
+      startTime: this.startTime,
       cabinetUid: this.cabinetUid,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
@@ -65,8 +81,12 @@ export class ImpulseTypeormEntity {
     entity.measuredAt = impulse.measuredAt;
     entity.sweepLength = impulse.sweepLength;
     entity.responseWindow = impulse.responseWindow;
-    entity.sampleInterval = impulse.sampleInterval;
     entity.measurements = impulse.measurements;
+    entity.peakValueBeforeInitialization = impulse.peakValueBeforeInitialization;
+    entity.peakIndex = impulse.peakIndex;
+    entity.responseLength = impulse.responseLength;
+    entity.sampleInterval = impulse.sampleInterval;
+    entity.startTime = impulse.startTime;
     entity.cabinetUid = impulse.cabinetUid;
     return entity;
   }

@@ -7,13 +7,17 @@ export interface ImpulseProps {
   measuredAt: string;
   sweepLength: string;
   responseWindow: string;
+  measurements: ImpulseGraph[];
+  peakValueBeforeInitialization: string;
+  peakIndex: string;
+  responseLength: string;
   sampleInterval: string;
-  measurements: ImpulseResponse[];
+  startTime: string;
   cabinetUid: string;
 }
 
-export interface ImpulseResponse {
-  response: number;
+export interface ImpulseGraph {
+  dbfs: number;
   time: number;
 }
 export class Impulse extends DomainEntity {
@@ -23,8 +27,12 @@ export class Impulse extends DomainEntity {
   readonly measuredAt: string;
   readonly sweepLength: string;
   readonly responseWindow: string;
+  readonly measurements: ImpulseGraph[];
+  readonly peakValueBeforeInitialization: string;
+  readonly peakIndex: string;
+  readonly responseLength: string;
   readonly sampleInterval: string;
-  readonly measurements: ImpulseResponse[];
+  readonly startTime: string;
   readonly cabinetUid: string;
   constructor(props: ImpulseProps & EntityProps) {
     super(props);
@@ -35,8 +43,12 @@ export class Impulse extends DomainEntity {
     this.measuredAt = props.measuredAt;
     this.sweepLength = props.sweepLength;
     this.responseWindow = props.responseWindow;
-    this.sampleInterval = props.sampleInterval;
     this.measurements = props.measurements;
     this.cabinetUid = props.cabinetUid;
+    this.peakValueBeforeInitialization = props.peakValueBeforeInitialization;
+    this.peakIndex = props.peakIndex;
+    this.responseLength = props.responseLength;
+    this.sampleInterval = props.sampleInterval;
+    this.startTime = props.startTime;
   }
 }

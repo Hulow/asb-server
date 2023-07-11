@@ -6,8 +6,14 @@ export class ImpulseAlreadyExists extends DomainError {
   }
 }
 
-export class ImpulseParameterNotFound extends DomainError {
-  constructor(parameter: string) {
-    super(`${parameter} parameter from Impulse not found`);
+export class ImpulseSettingNotFound extends DomainError {
+  constructor(setting: string) {
+    super(`${setting} setting from Impulse not found`);
+  }
+}
+
+export class MissingImpulseGraphDataFound extends DomainError {
+  constructor(responseLength: string, impulseGraphLength: number) {
+    super(`expecting${responseLength} entries from Impulse graph Response, only found ${impulseGraphLength}`);
   }
 }
