@@ -11,4 +11,11 @@ export class InMemoryImpulseRepository implements ImpulseRepositoryOutputPort {
     this.impulses.push(new Impulse({ ...impulse }));
     return Promise.resolve(impulse);
   }
+
+  async getByCabinetUid(cabinetUid: string) {
+    const _impulse = this.impulses.find((impulse) => impulse.cabinetUid === cabinetUid);
+    if (!_impulse) return undefined;
+    const impulse = new Impulse({ ..._impulse });
+    return Promise.resolve(impulse);
+  }
 }
