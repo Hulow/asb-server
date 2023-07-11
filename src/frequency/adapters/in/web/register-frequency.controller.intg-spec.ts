@@ -32,7 +32,6 @@ describe(`/api/frequency/register`, () => {
   });
 
   afterEach(async () => {
-    jest.setTimeout(60000);
     await database.clear();
   });
 
