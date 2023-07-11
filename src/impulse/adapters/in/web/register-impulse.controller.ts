@@ -8,7 +8,11 @@ import {
   REGISTER_IMPULSE_INPUT_PORT,
   RegisterImpulseInput,
 } from '../../../core/application/ports/in/register-impulse.input-port';
-import { ImpulseAlreadyExists, ImpulseParameterNotFound } from '../../../core/domain/errors';
+import {
+  ImpulseAlreadyExists,
+  ImpulseSettingNotFound,
+  MissingImpulseGraphDataFound,
+} from '../../../core/domain/errors';
 import { CabinetDoesNotExist } from '../../../../cabinet/core/domain/errors';
 
 @injectable()
@@ -31,8 +35,9 @@ export class RegisterImpulseController implements ExpressController {
       res.json(response);
     } catch (error) {
       if (error instanceof ImpulseAlreadyExists) throw new httpErrors.NotFound(error.message);
-      if (error instanceof ImpulseParameterNotFound) throw new httpErrors.NotFound(error.message);
+      if (error instanceof ImpulseSettingNotFound) throw new httpErrors.NotFound(error.message);
       if (error instanceof CabinetDoesNotExist) throw new httpErrors.NotFound(error.message);
+      if (error instanceof MissingImpulseGraphDataFound) throw new httpErrors.NotFound(error.message);
     }
   }
 }
