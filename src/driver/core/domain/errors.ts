@@ -5,3 +5,9 @@ export class DriverAlreadyExists extends DomainError {
     super(`Driver ${productName} already exists`);
   }
 }
+
+export class DriversNotFound extends DomainError {
+  constructor() {
+    super(`Unable to find any driver`);
+  }
+}
