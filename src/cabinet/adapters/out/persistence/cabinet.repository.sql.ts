@@ -31,5 +31,10 @@ export class SqlCabinetRepository implements CabinetRepositoryOutputPort {
     if (!cabinetEntity) return;
     return cabinetEntity.toDomain();
   }
-}
 
+  async getAllCabinets() {
+    const cabinetEntities = await this._repository.find();
+    if (!cabinetEntities.length) return;
+    return cabinetEntities.map((cabinet) => cabinet.toDomain());
+  }
+}
