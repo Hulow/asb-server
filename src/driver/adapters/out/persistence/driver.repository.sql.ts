@@ -14,10 +14,10 @@ export class SqlDriverRepository implements DriverRepositoryOutputPort {
     return entity.toDomain();
   }
 
-  async getByProductName(productName: string) {
-    const driverEntity = await this._repository.findOne({ where: { productName } });
-    if (!driverEntity) return;
-    return driverEntity.toDomain();
+  async getByProductNameAndCabinetUid(productName: string, cabinetUid: string) {
+    const driverEntities = await this._repository.find({ where: { productName, cabinetUid } });
+    if (!driverEntities.length) return;
+    return driverEntities.map((driver) => driver.toDomain());
   }
 
   async getByCabinetUid(cabinetUid: string) {
