@@ -8,11 +8,57 @@ import { UUID_V4_REGEX } from '../../../../shared/test/utils';
 import { Cabinet } from '../../../../cabinet/core/domain/cabinet';
 import { Owner } from '../../../../owner/core/domain/owner';
 import { Driver } from '../../domain/driver';
-import { DriverAlreadyExists } from '../../domain/errors';
+import { DriversAlreadyExists } from '../../domain/errors';
 
 import { CabinetDoesNotExist } from '../../../../cabinet/core/domain/errors';
 import { OwnerDoesNotExist } from '../../../../owner/core/domain/errors';
 
+function createOwner(ownerUid: number): Owner {
+  return {
+    uid: `owner-${ownerUid}`,
+    firstName: 'firstName',
+    lastName: 'lastName',
+    ownername: 'ownername',
+    email: 'email',
+    phoneNumber: 'phoneNumber',
+    city: 'city',
+    description: 'description',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+}
+
+function createCabinet(cabinetUid: number, ownerUid: number): Cabinet {
+  return {
+    uid: `cabinet-${cabinetUid}`,
+    brandName: 'Clauz',
+    productName: 'die Maschine',
+    enclosureType: 'Poccochin',
+    weight: 100,
+    dimension: 'dimension',
+    manufacturingYear: 2023,
+    description: 'description',
+    ownerUid: `owner-${ownerUid}`,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+}
+
+function createDriver(driverUid: number, cabinetUid: number): Driver {
+  return {
+    uid: `driver-${driverUid}`,
+    brandName: 'B&C',
+    productName: '12PE32',
+    driverType: 'Woofer',
+    manufacturingYear: 2015,
+    nominalDiameter: 12,
+    nominalImpedance: 8,
+    continuousPowerHandling: 500,
+    cabinetUid: `cabinet-${cabinetUid}`,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+}
 describe('RegisterDriverService', () => {
   let cabinetRepoStub: InMemoryCabinetRepository;
   let ownerRepoStub: InMemoryOwnerRepository;
@@ -26,34 +72,11 @@ describe('RegisterDriverService', () => {
     registerDriverService = new RegisterDriverService(driverRepoStub, cabinetRepoStub, ownerRepoStub);
   });
   it('register a driver', async () => {
-    const existingOwner: Owner = {
-      uid: 'owner-1',
-      firstName: 'firstName',
-      lastName: 'lastName',
-      ownername: 'ownername',
-      email: 'email',
-      phoneNumber: 'phoneNumber',
-      city: 'city',
-      description: 'description',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
+    const existingOwner: Owner = createOwner(1);
     await ownerRepoStub.save(existingOwner);
-
-    const existingCabinet: Cabinet = {
-      uid: 'cabinet-1',
-      brandName: 'Clauz',
-      productName: 'die Maschine',
-      enclosureType: 'Poccochin',
-      weight: 100,
-      dimension: 'dimension',
-      manufacturingYear: 2023,
-      description: 'description',
-      ownerUid: 'owner-1',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
+    const existingCabinet: Cabinet = createCabinet(1, 1);
     await cabinetRepoStub.save(existingCabinet);
+
     const registerDriverInput: RegisterDriverInput = {
       brandName: 'B&C',
       productName: '12PE32',
@@ -100,33 +123,10 @@ describe('RegisterDriverService', () => {
     }
   });
   it('does not register a driver if cabinet does not exist', async () => {
-    const existingOwner: Owner = {
-      uid: 'owner-1',
-      firstName: 'firstName',
-      lastName: 'lastName',
-      ownername: 'ownername',
-      email: 'email',
-      phoneNumber: 'phoneNumber',
-      city: 'city',
-      description: 'description',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
+    const existingOwner: Owner = createOwner(1);
     await ownerRepoStub.save(existingOwner);
 
-    const existingCabinet: Cabinet = {
-      uid: 'cabinet-2',
-      brandName: 'Clauz',
-      productName: 'die Maschine',
-      enclosureType: 'Poccochin',
-      weight: 100,
-      dimension: 'dimension',
-      manufacturingYear: 2023,
-      description: 'description',
-      ownerUid: 'owner-1',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
+    const existingCabinet: Cabinet = createCabinet(1, 1);
     await cabinetRepoStub.save(existingCabinet);
     const registerDriverInput: RegisterDriverInput = {
       brandName: 'B&C',
@@ -146,49 +146,18 @@ describe('RegisterDriverService', () => {
     }
   });
   it('does not register an existing driver', async () => {
-    const existingOwner: Owner = {
-      uid: 'owner-1',
-      firstName: 'firstName',
-      lastName: 'lastName',
-      ownername: 'ownername',
-      email: 'email',
-      phoneNumber: 'phoneNumber',
-      city: 'city',
-      description: 'description',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
+    const existingOwner: Owner = createOwner(1);
     await ownerRepoStub.save(existingOwner);
 
-    const existingCabinet: Cabinet = {
-      uid: 'cabinet-1',
-      brandName: 'Clauz',
-      productName: 'die Maschine',
-      enclosureType: 'Poccochin',
-      weight: 100,
-      dimension: 'dimension',
-      manufacturingYear: 2023,
-      description: 'description',
-      ownerUid: 'owner-1',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
+    const existingCabinet: Cabinet = createCabinet(1, 1);
     await cabinetRepoStub.save(existingCabinet);
 
-    const existingDriver: Driver = {
-      uid: 'driver-1',
-      brandName: 'B&C',
-      productName: '12PE32',
-      driverType: 'Woofer',
-      manufacturingYear: 2015,
-      nominalDiameter: 12,
-      nominalImpedance: 8,
-      continuousPowerHandling: 500,
-      cabinetUid: 'cabinet-1',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    await driverRepoStub.save(existingDriver);
+    const firstDriver: Driver = createDriver(1, 1);
+    const secondDriver: Driver = createDriver(2, 1);
+    const thirdDriver: Driver = createDriver(3, 1);
+    for (const driver of [firstDriver, secondDriver, thirdDriver]) {
+      await driverRepoStub.save(driver);
+    }
 
     const registerDriverInput: RegisterDriverInput = {
       brandName: 'B&C',
@@ -204,7 +173,7 @@ describe('RegisterDriverService', () => {
     try {
       await registerDriverService.handler(registerDriverInput);
     } catch (err) {
-      expect(err).toBeInstanceOf(DriverAlreadyExists);
+      expect(err).toBeInstanceOf(DriversAlreadyExists);
     }
   });
 });

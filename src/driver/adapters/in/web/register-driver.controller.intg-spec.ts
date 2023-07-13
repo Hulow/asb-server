@@ -92,12 +92,14 @@ describe(`/api/driver/register`, () => {
       cabinetUid: '4343b2ab-a22e-4d12-ac13-6bb399d4e513',
     };
 
-    const response: { body: { cabinetUid: string; ownerUid: string; productName: string } } = await request(expressApp)
+    const response: { body: { cabinetUid: string; productName: string } } = await request(expressApp)
       .post('/api/driver/register')
       .send(registerDriverInput)
       .set({ Authorization: config.express.asbKeyUrl, Accept: 'application/json' })
       .expect(200);
-    expect(await driverRepository.getByProductName(response.body.productName)).toEqual(expectedResponse);
+    expect(
+      await driverRepository.getByProductNameAndCabinetUid(response.body.productName, response.body.cabinetUid),
+    ).toEqual(expectedResponse);
   });
   it(`does not register a driver without owner`, async () => {
     const existingOwner = {
