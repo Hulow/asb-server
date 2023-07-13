@@ -57,6 +57,13 @@ import { RegisterCabinetService } from './cabinet/core/application/services/regi
 import { RegisterCabinetController } from './cabinet/adapters/in/web/register-cabinet.controller';
 
 import {
+  GetCabinetsCollectionOverviewInputPort,
+  GET_CABINETS_COLLECTION_OVERVIEW_INPUT_PORT,
+} from './cabinet/core/application/ports/in/get-cabinets-collection-overview.input-port';
+import { GetCabinetsCollectionOverviewService } from './cabinet/core/application/services/get-cabinets-collection-overview.service';
+import { GetCabinetsCollectionOverviewController } from './cabinet/adapters/in/web/get-cabinets-collection-overview.controller';
+
+import {
   RegisterFrequencyInputPort,
   REGISTER_FREQUENCY_INPUT_PORT,
 } from './frequency/core/application/ports/in/register-frequency.input-port';
@@ -86,6 +93,7 @@ container.bind(ExpressWebServer).toDynamicValue(() => {
     container.get(RegisterDriverController),
     container.get(RegisterFrequencyController),
     container.get(RegisterImpulseController),
+    container.get(GetCabinetsCollectionOverviewController),
   ];
   return new ExpressWebServer(config.express, container.get(LOGGER_OUTPUT_PORT), controllers);
 });
@@ -98,6 +106,9 @@ container.bind<RegisterCabinetInputPort>(REGISTER_CABINET_INPUT_PORT).to(Registe
 container.bind<RegisterDriverInputPort>(REGISTER_DRIVER_INPUT_PORT).to(RegisterDriverService);
 container.bind<RegisterFrequencyInputPort>(REGISTER_FREQUENCY_INPUT_PORT).to(RegisterFrequencyService);
 container.bind<RegisterImpulseInputPort>(REGISTER_IMPULSE_INPUT_PORT).to(RegisterImpulseService);
+container
+  .bind<GetCabinetsCollectionOverviewInputPort>(GET_CABINETS_COLLECTION_OVERVIEW_INPUT_PORT)
+  .to(GetCabinetsCollectionOverviewService);
 
 /**
  *  output/driven/secondary adapters

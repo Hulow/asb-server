@@ -11,3 +11,9 @@ export class CabinetDoesNotExist extends DomainError {
     super(`Cabinet ${cabinetUid} does not exist`);
   }
 }
+
+export class CabinetsNotFound extends DomainError {
+  constructor() {
+    super(`Unable to find any cabinet`);
+  }
+}
