@@ -57,11 +57,11 @@ import { RegisterCabinetService } from './cabinet/core/application/services/regi
 import { RegisterCabinetController } from './cabinet/adapters/in/web/register-cabinet.controller';
 
 import {
-  GetCabinetsRelationshipOverviewInputPort,
-  GET_CABINETS_RELATIONSHIP_OVERVIEW_INPUT_PORT,
-} from './cabinet/core/application/ports/in/get-cabinets-relationship-overview.input-port';
-import { GetCabinetsRelationshipOverviewService } from './cabinet/core/application/services/get-cabinets-relationship-overview.service';
-import { RegisterCabinetsRelationshipOverviewController } from './cabinet/adapters/in/web/get-cabinets-relationship-overview.controller';
+  GetCabinetsCollectionOverviewInputPort,
+  GET_CABINETS_COLLECTION_OVERVIEW_INPUT_PORT,
+} from './cabinet/core/application/ports/in/get-cabinets-collection-overview.input-port';
+import { GetCabinetsCollectionOverviewService } from './cabinet/core/application/services/get-cabinets-collection-overview.service';
+import { GetCabinetsCollectionOverviewController } from './cabinet/adapters/in/web/get-cabinets-collection-overview.controller';
 
 import {
   RegisterFrequencyInputPort,
@@ -93,7 +93,7 @@ container.bind(ExpressWebServer).toDynamicValue(() => {
     container.get(RegisterDriverController),
     container.get(RegisterFrequencyController),
     container.get(RegisterImpulseController),
-    container.get(RegisterCabinetsRelationshipOverviewController),
+    container.get(GetCabinetsCollectionOverviewController),
   ];
   return new ExpressWebServer(config.express, container.get(LOGGER_OUTPUT_PORT), controllers);
 });
@@ -107,8 +107,8 @@ container.bind<RegisterDriverInputPort>(REGISTER_DRIVER_INPUT_PORT).to(RegisterD
 container.bind<RegisterFrequencyInputPort>(REGISTER_FREQUENCY_INPUT_PORT).to(RegisterFrequencyService);
 container.bind<RegisterImpulseInputPort>(REGISTER_IMPULSE_INPUT_PORT).to(RegisterImpulseService);
 container
-  .bind<GetCabinetsRelationshipOverviewInputPort>(GET_CABINETS_RELATIONSHIP_OVERVIEW_INPUT_PORT)
-  .to(GetCabinetsRelationshipOverviewService);
+  .bind<GetCabinetsCollectionOverviewInputPort>(GET_CABINETS_COLLECTION_OVERVIEW_INPUT_PORT)
+  .to(GetCabinetsCollectionOverviewService);
 
 /**
  *  output/driven/secondary adapters

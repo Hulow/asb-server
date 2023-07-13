@@ -1,9 +1,9 @@
-export interface CabinetsRelationshipOverview {
+export interface CabinetsCollectionOverview {
   cabinetsLength: number;
-  cabinets: CabinetRelationshipOverview[];
+  cabinets: CabinetCollectionOverview[];
 }
 
-export interface CabinetRelationshipOverview {
+export interface CabinetCollectionOverview {
   cabinet: CabinetOverview;
   owner: OwnerOverview;
   drivers: DriverOverview[];

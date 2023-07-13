@@ -4,26 +4,26 @@ import { inject, injectable } from 'inversify';
 
 import { ExpressController } from '../../../../shared/adapters/in/express-web-server';
 import {
-  GetCabinetsRelationshipOverviewInputPort,
-  GET_CABINETS_RELATIONSHIP_OVERVIEW_INPUT_PORT,
-} from '../../../core/application/ports/in/get-cabinets-relationship-overview.input-port';
+  GetCabinetsCollectionOverviewInputPort,
+  GET_CABINETS_COLLECTION_OVERVIEW_INPUT_PORT,
+} from '../../../core/application/ports/in/get-cabinets-collection-overview.input-port';
 
 import { CabinetsNotFound } from '../../../core/domain/errors';
 import { OwnerDoesNotExist } from '../../../../owner/core/domain/errors';
 import { DriversNotFound } from '../../../../driver/core/domain/errors';
 
 @injectable()
-export class RegisterCabinetsRelationshipOverviewController implements ExpressController {
-  readonly route = '/api/cabinets-relationship';
+export class GetCabinetsCollectionOverviewController implements ExpressController {
+  readonly route = '/api/cabinets-collection';
   readonly method = 'get';
 
   constructor(
-    @inject(GET_CABINETS_RELATIONSHIP_OVERVIEW_INPUT_PORT)
-    private readonly getCabinetsRelationshipOverviewService: GetCabinetsRelationshipOverviewInputPort,
+    @inject(GET_CABINETS_COLLECTION_OVERVIEW_INPUT_PORT)
+    private readonly getCabinetsCollectionOverviewService: GetCabinetsCollectionOverviewInputPort,
   ) {}
   async handler(req: Request<unknown, unknown>, res: Response) {
     try {
-      const response = await this.getCabinetsRelationshipOverviewService.handler();
+      const response = await this.getCabinetsCollectionOverviewService.handler();
       res.json(response);
     } catch (error) {
       if (error instanceof OwnerDoesNotExist) throw new httpErrors.NotFound(error.message);
