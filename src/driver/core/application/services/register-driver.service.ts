@@ -11,7 +11,7 @@ import {
   OWNER_REPOSITORY_OUTPUT_PORT,
   OwnerRepositoryOutputPort,
 } from '../../../../owner/core/application/ports/out/owner-repository.output-port';
-import { DriverAlreadyExists } from '../../domain/errors';
+import { DriversAlreadyExists } from '../../domain/errors';
 import { OwnerDoesNotExist } from '../../../../owner/core/domain/errors';
 import { CabinetDoesNotExist } from '../../../../cabinet/core/domain/errors';
 
@@ -34,10 +34,18 @@ export class RegisterDriverService implements RegisterDriverInputPort {
     if (!existingCabinet) {
       throw new CabinetDoesNotExist(input.cabinetUid);
     }
-    const existingDriver = await this._driverRepository.getByProductName(input.productName);
-    if (existingDriver) {
-      throw new DriverAlreadyExists(existingDriver.productName);
+    const existingDrivers = await this._driverRepository.getByProductNameAndCabinetUid(
+      input.productName,
+      input.cabinetUid,
+    );
+    if (existingDrivers && existingDrivers.length > 2) {
+      throw new DriversAlreadyExists(
+        existingDrivers.length,
+        existingDrivers[0].productName,
+        existingDrivers[0].cabinetUid,
+      );
     }
+
     return await this._driverRepository.save(driver);
   }
 }

@@ -1,8 +1,8 @@
 import { DomainError } from '../../../shared/domain/error';
 
-export class DriverAlreadyExists extends DomainError {
-  constructor(productName: string) {
-    super(`Driver ${productName} already exists`);
+export class DriversAlreadyExists extends DomainError {
+  constructor(driverQuantity: number, productName: string, cabinetUid: string) {
+    super(`Already ${driverQuantity} ${productName} drivers are mounted on cabinet ${cabinetUid} `);
   }
 }
 

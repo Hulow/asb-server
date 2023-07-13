@@ -2,7 +2,7 @@ import { Driver } from '../../../domain/driver';
 
 export interface DriverRepositoryOutputPort {
   save: (driver: Driver) => Promise<Driver>;
-  getByProductName: (productName: string) => Promise<Driver | undefined>;
+  getByProductNameAndCabinetUid: (productName: string, cabinetUid: string) => Promise<Driver[] | undefined>;
   getByCabinetUid: (cabinetUid: string) => Promise<Driver[] | undefined>;
 }
 

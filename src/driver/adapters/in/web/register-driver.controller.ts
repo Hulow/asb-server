@@ -8,7 +8,7 @@ import {
   REGISTER_DRIVER_INPUT_PORT,
   RegisterDriverInput,
 } from '../../../core/application/ports/in/register-driver.input-port';
-import { DriverAlreadyExists } from '../../../core/domain/errors';
+import { DriversAlreadyExists } from '../../../core/domain/errors';
 import { OwnerDoesNotExist } from '../../../../owner/core/domain/errors';
 import { CabinetDoesNotExist } from '../../../../cabinet/core/domain/errors';
 @injectable()
@@ -43,7 +43,7 @@ export class RegisterDriverController implements ExpressController {
       const response = await this._registerDriverService.handler(req.body as RegisterDriverInput);
       res.json(response);
     } catch (error) {
-      if (error instanceof DriverAlreadyExists) throw new httpErrors.NotFound(error.message);
+      if (error instanceof DriversAlreadyExists) throw new httpErrors.NotFound(error.message);
       if (error instanceof CabinetDoesNotExist) throw new httpErrors.NotFound(error.message);
       if (error instanceof OwnerDoesNotExist) throw new httpErrors.NotFound(error.message);
       throw error;
